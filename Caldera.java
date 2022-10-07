@@ -5,7 +5,7 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Artius Devora
  * @version 1.0
  */
 public class Caldera {
@@ -16,24 +16,38 @@ public class Caldera {
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
     
+    private final double IMP_IVA = 0.22;
+    private final double IMP_HIDROCARBUROS = 0.20;
+    
+     
 
     // Conceptos gastos
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
+    private final char NADA = 'N';
     
 
     // Ningun mes
-    
+    private final int NINGUNO = 0;
+
 
     // Periodos
+    private final int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    private final int PERIODO_ENERO_MARZO = 2;
+    private final int PERIODO_ABRIL_JUNIO = 3;
+    private final int PERIODO_JULIO_SEPTIEMBRE = 4;
     
-
+    
     
     // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
 
     // vecinos y presupuesto
-    
+    private int vecinos;
+    private double presupuesto;
 
     // acumulados
-
+    
+    
     // estadisticas
 
     
