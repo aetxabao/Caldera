@@ -1,7 +1,7 @@
 /**
  * class DemoCaldera
  * 
- * @author
+ * @Asier Taberna Robles
  * @version
  */
 public class DemoCaldera {

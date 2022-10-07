@@ -5,14 +5,14 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Asier Taberna Robles
  * @version 1.0
  */
 public class Caldera {
     
     // TODO: CONSTANTES
 
-    /** El IVA se aplica a todos los gasto. */
+    /** El IVA se aplica a todos los gastos. */
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
     
