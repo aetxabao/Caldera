@@ -5,7 +5,7 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Antonio Calahorra
  * @version 1.0
  */
 public class Caldera {
