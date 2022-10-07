@@ -47,9 +47,22 @@ public class Caldera {
 
     // acumulados
     
+    private double acomuladoConsumo;
+    private double acomuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
     
     // estadisticas
-
+    private int mesMasConsumo;
+    private double maxConsumo;
+    
+    private int mesMasCaro;
+    private double maxPrecio;
+    
+    private int mesMasBarato;
+    private double minPercio;
+    
+   
     
     
     
