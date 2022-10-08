@@ -11,41 +11,83 @@
 public class Caldera {
     
     // TODO: CONSTANTES
-
+    
     /** El IVA se aplica a todos los gasto. */
+    private final double IMP_IVA = 0.22;
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
+    private final double IMP_HIDROCARBUROS = 0.20;
     
-
     // Conceptos gastos
-    
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
+    private final char NADA = 'N';
 
     // Ningun mes
-    
+    private final int NINGUNO = 0;
 
     // Periodos
-    
+    private final int PERIODO_OCTUBERE_DICIEMBRE = 1;
+    private final int PERIODO_ENERO_MARZO = 2;
+    private final int PERIODO_ABRIL_JUNIO = 3;
+    private final int PERIODO_JULIO_SEPTIEMBRE = 4;
 
     
     // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
 
     // vecinos y presupuesto
-    
+    private int vecinos;
+    private double presupuesto;
 
     // acumulados
-
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
+    
     // estadisticas
-
+    private int mesMasConsumo;
+    private double maxConsumo;
     
+    private int mesMasCaro;
+    private double maxPrecio;
     
+    private int mesMasBarato;
+    private double minPrecio;
+    
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    
+    private double mesMasGasto;
+    private double maxGasto;
+    private double conceptoMasGasto;
     
     // TODO: constructores
     
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      */
+    public Caldera()
+    {
+        vecinos = 0;
+        presupuesto = 0;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NADA;
+        mesMasCaro = NINGUNO;
+        maxPrecio = NADA;
+        mesMasBarato = NADA;
+        minPrecio = 0;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = NADA;
+        mesMasGasto = NINGUNO;
+        maxGasto = NADA;
+        conceptoMasGasto = NINGUNO;
+    }
     
-
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      * 
@@ -53,9 +95,26 @@ public class Caldera {
      * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
      *                       gastos
      */
-    
-
-    
+    public Caldera(int newNumVecinos, double newPresupuesto)
+    {
+        vecinos = newNumVecinos;
+        presupuesto = newPresupuesto;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NADA;
+        mesMasCaro = NINGUNO;
+        maxPrecio = NADA;
+        mesMasBarato = NADA;
+        minPrecio = 0;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = NADA;
+        mesMasGasto = NINGUNO;
+        maxGasto = NADA;
+        conceptoMasGasto = NINGUNO;
+    }
     // TODO: getters y setters
     
     /**
@@ -63,28 +122,40 @@ public class Caldera {
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
-    
+    public void setPresupuesto(int newPresupuesto)
+    {
+        presupuesto = newPresupuesto;
+    }
 
     /**
      * Obtiene el valor del presupuesto
      * 
      * @return valor del presupuesto, ej. 38638
      */
-    
+    public double getPresupuesto()
+    {
+        return presupuesto;
+    }
 
     /**
      * Fija el numero de vecinos de la comunidad
      * 
      * @param queVecinos numero de vecinos, ej. 48
      */
-    
+    public void setVecinos(int newVecino)
+    {
+        vecinos = newVecino;
+    }
 
     /**
      * Obtiene el numero de vecinos
      * 
      * @return numero de vecinos, ej. 48
      */
-    
+    public int getVecinos()
+    {
+        return vecinos;
+    }
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
@@ -94,9 +165,44 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        //TODO: PRUEBAS
+        acumuladoConsumo += gas * precio;
+        if(maxConsumo == NADA){
+            maxConsumo = gas * precio;
+        }else if(maxConsumo < gas * precio){
+            maxConsumo = gas * precio;
+        }
+        
+        if(mesMasConsumo == NINGUNO){
+            mesMasConsumo = mes;
+        }else if(maxConsumo < gas * precio){
+            mesMasConsumo = mes;
+        }
+        
+        if(maxPrecio == NADA){
+            maxPrecio = precio;
+        }else if(maxPrecio < precio){
+            maxPrecio = precio;
+        }
+        
+        if(mesMasCaro == NINGUNO){
+            mesMasCaro = mes;
+        }else if(maxPrecio < precio){
+            mesMasCaro = mes;
+        }
+        
+        if(minPrecio == NADA){
+            minPrecio = precio;
+        }else if(minPrecio > precio){
+            minPrecio = precio;
+        }
+        
+        if(mesMasBarato == NINGUNO){
+            mesMasBarato = mes;
+        }else if(minPrecio > precio){
+            mesMasBarato = mes;
+        }
     }
-
     /**
      * Gasto de mantenimiento en cada periodo
      * 
@@ -104,7 +210,19 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        //TODO: PRUEBAS
+        acumuladoMantenimiento += importe;
+        if(maxMantenimiento == NADA){
+            maxMantenimiento = importe;
+        }else if(maxMantenimiento < importe){
+            maxMantenimiento = importe;
+        }
+        
+        if(periodoMasMantenimiento == NINGUNO){
+            periodoMasMantenimiento = periodo;
+        }else if(maxMantenimiento < importe){
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -116,6 +234,29 @@ public class Caldera {
      */
     public void gasto(int mes, char concepto, double importe) {
         // TODO: gasto
+        if(concepto == AGUA){
+           gastoAgua += importe; 
+        }else if(concepto == LUZ){
+            gastoLuz += importe;
+        }
+        
+        if(maxGasto == NADA){
+            maxGasto = importe;
+        }else if(maxGasto < importe){
+            maxGasto = importe;
+        }
+        
+        if(mesMasGasto == NINGUNO){
+            mesMasGasto = mes;
+        }else if(maxGasto < importe){
+            mesMasGasto = mes;
+        }
+        
+        if(conceptoMasGasto == NINGUNO){
+            conceptoMasGasto = concepto;
+        }else if(maxGasto < importe){
+            conceptoMasGasto = concepto;
+        }
     }
 
     /**
