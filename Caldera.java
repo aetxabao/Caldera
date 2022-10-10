@@ -60,7 +60,14 @@ public class Caldera {
     private double maxPrecio;
     
     private int mesMasBarato;
-    private double minPercio;
+    private double minPrecio;
+    
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    
+    private int mesMasGasto;
+    private double maxGasto;
+    private char conceptoMasGasto;
     
    
     
@@ -72,16 +79,47 @@ public class Caldera {
      * Constructor de la clase Caldera. Inicializa los atributos.
      */
     
-
-    /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     * 
-     * @param queVecinos     Numero de vecinos que conforman la comunidad
-     * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
-     *                       gastos
-     */
+    public Caldera()
+    {
+        acomuladoConsumo = 0;
+        acomuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = 0;
+        mesMasCaro = NINGUNO;
+        maxPrecio = 0;
+        mesMasBarato = NINGUNO;
+        minPrecio = 0;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = 0;
+        mesMasGasto = NINGUNO;
+        maxGasto = 0;
+        conceptoMasGasto = 'N';   
+    }
     
 
+    
+        public Caldera(int vecinos, double presupuesto)
+    {
+        this.vecinos = vecinos;
+        this.presupuesto = presupuesto;
+        acomuladoConsumo = 0;
+        acomuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = 0;
+        mesMasCaro = NINGUNO;
+        maxPrecio = 0;
+        mesMasBarato = NINGUNO;
+        minPrecio = 0;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = 0;
+        mesMasGasto = NINGUNO;
+        maxGasto = 0;
+        conceptoMasGasto = 'N';   
+    }
     
     // TODO: getters y setters
     
@@ -90,28 +128,40 @@ public class Caldera {
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
-    
+    public void setPresupuesto(double quePresupuesto)
+    {
+        presupuesto = quePresupuesto;
+    }
 
     /**
      * Obtiene el valor del presupuesto
      * 
      * @return valor del presupuesto, ej. 38638
      */
-    
+    public double getPresupuesto()
+    {
+        return presupuesto;
+    }
 
     /**
      * Fija el numero de vecinos de la comunidad
      * 
      * @param queVecinos numero de vecinos, ej. 48
      */
-    
+    public void setVecinos(int queVecinos)
+    {
+        vecinos = queVecinos;
+    }
 
     /**
      * Obtiene el numero de vecinos
      * 
      * @return numero de vecinos, ej. 48
      */
-    
+    public int getVecinos()
+    {
+        return vecinos;
+    }
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
@@ -121,7 +171,35 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
+        int cantidadMeses = 0;
+        cantidadMeses ++;
         // TODO: consumo
+        acomuladoConsumo += (gas * precio);
+        if (cantidadMeses == 1){ 
+            mesMasConsumo = mes;
+            maxConsumo = (gas * precio);
+            mesMasCaro = mes;
+            maxPrecio = precio;
+            mesMasBarato = mes;
+            minPrecio = precio;
+        }
+        else {
+            if ((gas * precio) > maxConsumo)
+            {
+                maxConsumo = (gas * precio);
+                mesMasConsumo = mes;
+            }
+            else if (precio > maxPrecio)
+            {
+                maxPrecio = precio;
+                mesMasCaro = mes;
+            }
+            else if (precio < minPrecio)
+            {
+                minPrecio = precio;
+                mesMasBarato = mes;
+            }
+        }
     }
 
     /**
@@ -131,7 +209,13 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
+        int cantidadPeriodos = 0;
+        cantidadPeriodos ++;
         // TODO: mantenimiento
+        acomuladoMantenimiento += importe;
+        if (cantidadPeriodos == 1){
+            
+        }
     }
 
     /**
