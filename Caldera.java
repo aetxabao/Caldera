@@ -128,8 +128,7 @@ public class Caldera {
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
-    public void setPresupuesto(double quePresupuesto)
-    {
+    public void setPresupuesto(double quePresupuesto){
         presupuesto = quePresupuesto;
     }
 
@@ -138,8 +137,7 @@ public class Caldera {
      * 
      * @return valor del presupuesto, ej. 38638
      */
-    public double getPresupuesto()
-    {
+    public double getPresupuesto(){
         return presupuesto;
     }
 
@@ -148,8 +146,7 @@ public class Caldera {
      * 
      * @param queVecinos numero de vecinos, ej. 48
      */
-    public void setVecinos(int queVecinos)
-    {
+    public void setVecinos(int queVecinos){
         vecinos = queVecinos;
     }
 
@@ -158,8 +155,7 @@ public class Caldera {
      * 
      * @return numero de vecinos, ej. 48
      */
-    public int getVecinos()
-    {
+    public int getVecinos(){
         return vecinos;
     }
 
