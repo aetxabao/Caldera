@@ -214,7 +214,15 @@ public class Caldera {
         // TODO: mantenimiento
         acomuladoMantenimiento += importe;
         if (cantidadPeriodos == 1){
-            
+            periodoMasMantenimiento = periodo;
+            maxMantenimiento = (periodo * importe);
+        }
+        else {
+            if (periodo * importe > maxMantenimiento)
+            {
+                maxMantenimiento = (periodo * importe);
+                periodoMasMantenimiento = periodo;
+            }
         }
     }
 
@@ -226,7 +234,28 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
+        int cantidadMeses = 0;
+        cantidadMeses ++;
         // TODO: gasto
+        if (concepto == 'A'){
+            gastoAgua += importe;
+        }
+        if (concepto == 'L'){
+            gastoLuz += importe;
+        }
+        
+        if ((cantidadMeses == 1) || (concepto != 'N')){
+            mesMasGasto = mes;
+            maxGasto = importe;
+            conceptoMasGasto = concepto;
+        }
+        else{
+            if((importe > maxGasto) || (concepto != 'N')){
+                maxGasto = importe;
+                mesMasGasto = mes;
+                conceptoMasGasto = concepto;
+            }
+        }
     }
 
     /**
@@ -262,7 +291,41 @@ public class Caldera {
      * ------------------
      */
     public void printResultados() {
+        double total = (presupuesto - acomuladoConsumo - ((IMP_IVA + IMP_HIDROCARBUROS) * acomuladoConsumo) - acomuladoMantenimiento - (IMP_IVA * acomuladoMantenimiento) - gastoAgua - (IMP_IVA * gastoAgua) - gastoLuz - (IMP_IVA * gastoLuz));
+        double totalVecino = (total / vecinos);
+        String resultado = "";
+        if (total > presupuesto) resultado = "NEGATIVO,";
+        else if (total < presupuesto) resultado = "POSITIVO,";
         // TODO: printResultados
+        System.out.println("==================");
+        System.out.println("RESULTADO GLOBAL");
+        System.out.println("==================");
+        System.out.println("Presupuesto: " + presupuesto );
+        System.out.println("Consumo gas: " + acomuladoConsumo );
+        System.out.println("Impuestos g.: " + (IMP_IVA + IMP_HIDROCARBUROS) * acomuladoConsumo );
+        System.out.println("Mantenimiento " + acomuladoMantenimiento );
+        System.out.println("Iva manto.: " + (IMP_IVA * acomuladoMantenimiento));
+        System.out.println("Gasto agua: " + gastoAgua );
+        System.out.println("Iva agua: " + (IMP_IVA * gastoAgua));
+        System.out.println("Gasto luz: " + gastoLuz );
+        System.out.println("Iva luz: " + (IMP_IVA * gastoLuz));
+        System.out.println("------------------");
+        System.out.println("TOTAL : " + total );
+        System.out.println("------------------");
+        System.out.println("==================");
+        System.out.println("RESULTADO X VECINO");
+        System.out.println("==================");
+        System.out.println("Vecinos: " + vecinos );
+        System.out.println("Aporte v.: " + (presupuesto / vecinos));
+        System.out.println("Gasto v.: " + (total - presupuesto) / vecinos);
+        System.out.println("Resultado: " + (total / vecinos));
+        System.out.println("------------------");
+        System.out.println("El resultado ha sido " + resultado);
+        System.out.println("se tiene que pagar " + totalVecino + " Euros.");
+        System.out.println("El pago se pasara en");
+        // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        System.out.println("==================");
+        System.out.println("------------------");
     }
 
     /**
@@ -280,6 +343,15 @@ public class Caldera {
      */
     public void printEstadisticas() {
         // TODO: printEstadisticas
+        System.out.println("==================");
+        System.out.println("ESTADISTICAS");
+        System.out.println("==================");
+        System.out.println("Max. consumo:\t" + mesMasConsumo + maxConsumo);
+        System.out.println("Mes mas caro:\t" + mesMasCaro + maxPrecio);
+        System.out.println("Mes mas barato:\t" + mesMasBarato + minPrecio);
+        System.out.println("Mayor gasto en:\t" + mesMasGasto + maxGasto + conceptoMasGasto);
+        System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + maxMantenimiento);
+        System.out.println("------------------");
     }
 
     /**
