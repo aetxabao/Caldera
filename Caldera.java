@@ -5,86 +5,144 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Alberto Navarro
  * @version 1.0
  */
 public class Caldera {
     
-    // TODO: CONSTANTES
-
+    // Constantes
+    
+    //Constantes impuestos
+    private final double IMP_IVA = 0.22;
+    private final double IMP_HIDROCARBUROS = 0.22;
+    
+    //Constantes gastos
+    private final String AGUA = "A";
+    private final String LUZ = "L";
+    private final String NADA = "N";
+    
+    //Constante Ningún mes
+    private final int NINGUNO = 0;
+    
+    //Constantes periodo
+    private final int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    private final int PERIODO_ENERO_MARZ0 = 2;
+    private final int PERIODO_ABRIL_JUNIO = 3;
+    private final int PERIODO_JULIO_SEPTIEMBRE = 4;
+    
+    //Atributos
+    private int vecinos;
+    private double presupuesto;
+    
+    //Atributos gastos
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
+    
+    //Atributos meses
+    private int mesMasConsumo;
+    private int maxConsumo;
+    private int mesMasCaro;
+    private int maxCaro;
+    private int mesMasBarato;
+    private int minPrecio;
+    
+    //Otros Atributos
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    
+    //Atributos gastos
+    private int mesMasGasto;
+    private double MaxGasto;
+    private double conceptoMasGasto;
+    
+    
     /** El IVA se aplica a todos los gasto. */
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
     
-
-    // Conceptos gastos
-    
-
-    // Ningun mes
-    
-
-    // Periodos
-    
-
-    
-    // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
-
-    // vecinos y presupuesto
-    
-
-    // acumulados
-
-    // estadisticas
-
-    
-    
-    
     // TODO: constructores
     
+    public Caldera()
+    {
+        //Atributos meses
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NINGUNO;
+        mesMasCaro = NINGUNO;
+        maxCaro = NINGUNO;
+        mesMasBarato = NINGUNO;
+        minPrecio = NINGUNO;
+            
+        //Atributos periodo
+        periodoMasMantenimiento = NINGUNO;
+        
+        //Atributo masGasto
+        conceptoMasGasto = 0;
+    }
+    
+        public Caldera(int queVecinos, double quePresupuesto)
+    {
+        //Atributos con valor pasado
+        vecinos = queVecinos;
+        presupuesto = quePresupuesto;
+        
+        //Atributos meses
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NINGUNO;
+        mesMasCaro = NINGUNO;
+        maxCaro = NINGUNO;
+        mesMasBarato = NINGUNO;
+        minPrecio = NINGUNO;
+            
+        //Atributos periodo
+        periodoMasMantenimiento = NINGUNO;
+        
+        //Atributo masGasto
+        conceptoMasGasto = 0;
+    }
+    
+    //Getters
     /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     */
-    
-
-    /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     * 
-     * @param queVecinos     Numero de vecinos que conforman la comunidad
-     * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
-     *                       gastos
-     */
-    
-
-    
-    // TODO: getters y setters
+    * Obtiene el numero de vecinos
+    * 
+    * @return numero de vecinos, ej. 48
+    */
+    public int getVecinos()
+    {
+        return vecinos;
+    }
     
     /**
-     * Fija el valor del presupuesto
-     * 
-     * @param quePresupuesto Valor del presupuesto, ej. 38638
-     */
-    
-
+    * Obtiene el valor del presupuesto
+    * 
+    * @return valor del presupuesto, ej. 38638
+    */
+    public double getPresupuesto()
+    {
+        return presupuesto;
+    }
+ 
+    //Setters
     /**
-     * Obtiene el valor del presupuesto
-     * 
-     * @return valor del presupuesto, ej. 38638
-     */
+    * Fija el numero de vecinos de la comunidad
+    * 
+    * @param queVecinos numero de vecinos, ej. 48
+    */
+    public void setVecinos(int queVecinos)
+    {
+        vecinos = queVecinos;
+    }
     
-
     /**
-     * Fija el numero de vecinos de la comunidad
-     * 
-     * @param queVecinos numero de vecinos, ej. 48
-     */
-    
-
-    /**
-     * Obtiene el numero de vecinos
-     * 
-     * @return numero de vecinos, ej. 48
-     */
-    
+    * Fija el valor del presupuesto
+    * 
+    * @param quePresupuesto Valor del presupuesto, ej. 38638
+    */
+    public void setPresupuesto(double quePresupuesto)
+    {
+        presupuesto = quePresupuesto;
+    }
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
