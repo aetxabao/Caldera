@@ -11,27 +11,29 @@
 public class Caldera {
     
     // TODO: CONSTANTES
-
+    
     /** El IVA se aplica a todos los gastos. */
-    
+    private final double IMP_IVA = 0.22;
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
-    
+    private final double IMP_HIDROCARBUROS = 0.20;    
 
     // Conceptos gastos
+    private final char AGUA = 'A';
+    private char LUZ = 'L';
+    private char NADA = 'N';
     
-
     // Ningun mes
-    
-
+    private int NINGUNO = 0;
     // Periodos
-    
-
-    
+    private int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    private int PERIODO_ENERO_MARZO = 2;
+    private int PERIODO_ABRIL_JUNIO = 3;
+    private int PERIODO_JULIO_SEPTIEMBRE = 4;
     // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
-
+    
     // vecinos y presupuesto
     
-
+    
     // acumulados
 
     // estadisticas
