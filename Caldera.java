@@ -342,11 +342,11 @@ public class Caldera {
         System.out.println("==================");
         System.out.println("ESTADISTICAS");
         System.out.println("==================");
-        System.out.println("Max. consumo:\t" + mesMasConsumo + maxConsumo);
-        System.out.println("Mes mas caro:\t" + mesMasCaro + maxPrecio);
-        System.out.println("Mes mas barato:\t" + mesMasBarato + minPrecio);
-        System.out.println("Mayor gasto en:\t" + mesMasGasto + maxGasto + conceptoMasGasto);
-        System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + maxMantenimiento);
+        System.out.println("Max. consumo:\t" + mesMasConsumo + "\t" + maxConsumo);
+        System.out.println("Mes mas caro:\t" + mesMasCaro + "\t" + maxPrecio);
+        System.out.println("Mes mas barato:\t" + mesMasBarato + "\t" + minPrecio);
+        System.out.println("Mayor gasto en:\t" + mesMasGasto + "\t" + maxGasto + conceptoMasGasto);
+        System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + "\t" + maxMantenimiento);
         System.out.println("------------------");
     }
 
@@ -357,8 +357,36 @@ public class Caldera {
      * @return Nombre del mes, ej. ENERO
      */
     public String getNombreMes(int numMes) {
+        String str = "";
         // TODO: getNombreMes
-        return "";        
+        switch (numMes){
+            case 1: str = "ENERO";
+                break;
+            case 2: str = "FEBRERO";
+                break;
+            case 3: str = "MARZO";
+                break;
+            case 4: str = "ABRIL";
+                break;
+            case 5: str = "MAYO";
+                break;
+            case 6: str = "JUNIO";
+                break;
+            case 7: str = "JULIO";
+                break;
+            case 8: str = "AGOSTO";
+                break;
+            case 9: str = "SEPTIEMBRE";
+                break;
+            case 10: str = "OCTUBRE";
+                break;
+            case 11: str = "NOVIEMBRE";
+                break;
+            case 12: str = "DICIEMBRE";
+                break;
+            default: str = "NINGUNO";
+        }
+        return str;        
     }
 
     /**
@@ -368,8 +396,17 @@ public class Caldera {
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
     public String getNombreConcepto(char concepto) {
-        // TODO: getNombreConcepto
-        return "";        
+        String str = "";   
+        
+        if (concepto == 'A'){
+            str = "AGUA";
+        }
+        else if (concepto == 'L'){
+            str = "LUZ";
+        }
+        else str = "NADA";
+        
+        return str;
     }
 
     /**
@@ -380,8 +417,20 @@ public class Caldera {
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
     public String getNombrePeriodo(int numPeriodo) {
+        String str = "";
         // TODO: getNombrePeriodo
-        return "";        
+        switch (numPeriodo){
+            case 1: str = "OCTUBRE-DICIEMBRE";
+                break;
+            case 2: str = "ENERO-MARZO";
+                break;
+            case 3: str = "ABRIL-JUNIO";
+                break;
+            case 4: str = "JULIO-SEPTIEMBRE";
+                break;
+            default: str = "NINGUN PERIODO";
+        }
+        return str;        
     }
 
     /**
@@ -416,8 +465,21 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        // TODO: analisisResultado
-        return "";
+        String str = "";
+        if (resultado >= 0){
+           str = "El resultado ha sido POSITIVO," + "\n" + "se devolvera " + resultado + " Euros." + "\n" + "El pago se realizara en breve en" + "\n" + "una transferencia.";
+           
+        }
+        else if ((resultado >= -200) || (resultado < 0)){
+            str = "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + (-1 * resultado) + " Euros." + "\n" + "El pago se pasara en un solo cobro."; 
+        }
+        else if ((resultado >= -600) || (resultado < 0)){
+            str = "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + resultado + " Euros." + "\n" + "El pago se pasara en" + "\n" + ((int)resultado / 200) + "cuotas de 200 Euros y" + "\n" + "otro cobro de " + (resultado - (((int)resultado / 200)) * 200);
+        }
+        else if (resultado < -600){
+            str = "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + resultado + " Euros." + "\n" + "El pago se pasara en" + "\n" + "5 cuotas de " + (resultado / 5) + " Euros.";
+        }
+        return str;
     }
 
     /**
