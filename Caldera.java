@@ -32,21 +32,48 @@ public class Caldera {
     // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
     
     // vecinos y presupuesto
-    
-    
+    private int vecinos;
+    private double presupuesto;
     // acumulados
-
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
     // estadisticas
-
-    
-    
-    
+    private int mesMasConsumo;
+    private double maxConsumo;
+    private int mesMasCaro;
+    private double maxPrecio;
+    private int mesMasBarato;
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    private int mesMasGasto;
+    private double maxGasto;
+    private char conceptoMasGasto;
     // TODO: constructores
     
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      */
-    
+    public Caldera(){
+        vecinos = 0;
+        presupuesto = 0;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = 0;
+        mesMasCaro = NINGUNO;
+        maxPrecio = 0;
+        mesMasBarato = NINGUNO;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = 0;
+        mesMasGasto = NINGUNO;
+        maxGasto = 0;
+        conceptoMasGasto = NADA;
+    }
+        
 
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
@@ -59,35 +86,42 @@ public class Caldera {
 
     
     // TODO: getters y setters
+    /**
+     * Obtiene el numero de vecinos
+     * 
+     * @return numero de vecinos, ej. 48
+     */
+    public int getVecinos() {
+        return vecinos;
+    }
+    
+    /**
+     * Fija el numero de vecinos de la comunidad
+     * 
+     * @param queVecinos numero de vecinos, ej. 48
+     */
+    public void setVecinos(int queVecinos) {
+        vecinos = queVecinos;
+    }
+    
+    /**
+     * Obtiene el valor del presupuesto
+     * 
+     * @return valor del presupuesto, ej. 38638
+     */
+    public double getPresupuesto() {
+        return presupuesto;
+    }
     
     /**
      * Fija el valor del presupuesto
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
+    public void setPresupuesto(double quePresupuesto) {
+        presupuesto = quePresupuesto;
+    }
     
-
-    /**
-     * Obtiene el valor del presupuesto
-     * 
-     * @return valor del presupuesto, ej. 38638
-     */
-    
-
-    /**
-     * Fija el numero de vecinos de la comunidad
-     * 
-     * @param queVecinos numero de vecinos, ej. 48
-     */
-    
-
-    /**
-     * Obtiene el numero de vecinos
-     * 
-     * @return numero de vecinos, ej. 48
-     */
-    
-
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
      * 
@@ -97,6 +131,7 @@ public class Caldera {
      */
     public void consumo(int mes, int gas, double precio) {
         // TODO: consumo
+        
     }
 
     /**
