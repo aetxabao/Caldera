@@ -37,7 +37,7 @@ public class Caldera {
 
     // vecinos y presupuesto
     private int vecinos;
-    private int presupuesto;
+    private double presupuesto;
 
     // acumulados
     private double acumuladoConsumo;
@@ -90,7 +90,7 @@ public class Caldera {
      * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
      *                       gastos
      */
-    public Caldera(int queVecinos, int quePresupuesto){
+    public Caldera(int queVecinos, double quePresupuesto){
         vecinos = queVecinos;
         presupuesto = quePresupuesto;
     }
@@ -103,7 +103,7 @@ public class Caldera {
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
-    public void setPresupuesto(int quePresupuesto){
+    public void setPresupuesto(double quePresupuesto){
         presupuesto = quePresupuesto;
     }
 
@@ -112,7 +112,7 @@ public class Caldera {
      * 
      * @return valor del presupuesto, ej. 38638
      */
-    public int getPresupuesto(){
+    public double getPresupuesto(){
         return presupuesto;
     }
 
