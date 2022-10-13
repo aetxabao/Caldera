@@ -448,7 +448,7 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        // TODO: analisisResultado
+        // TODO: Corregir lo de 600 en clase mañana
         String texto = "";
         if(resultado > 0){
             texto = "El resultado ha sido POSITIVO,\nse tiene que pagar " + resultado + 
@@ -456,15 +456,15 @@ public class Caldera {
         }else if(resultado  <= -200 && resultado > -201){
             texto = "El resultado ha sido NEGATIVO,\nse tiene que pagar " + resultado + 
             " Euros.\nEl pago se pasara en un solo cobro.";
-        }else if(resultado  <= -600 && resultado > -601){
+        }else if(resultado  <= -600){
             int cuota = divisionEntera(-resultado, 200);
             if(resultado  == -600){
-            texto = "El resultado ha sido NEGATIVO,\nse tiene que pagar " + -resultado + 
-            " Euros.\nEl pago se pasara en 2 cuotas de 200 euros y\n otro cobro de " + restoDivisionEntera(resultado, 400)+ " Euros.";
+                texto = "El resultado ha sido NEGATIVO,\nse tiene que pagar " + -resultado + 
+                " Euros.\nEl pago se pasara en 2 cuotas de 200 euros y\n otro cobro de " + restoDivisionEntera(resultado, 400)+ " Euros.";
             }else{
                 texto = "El resultado ha sido NEGATIVO,\nse tiene que pagar " + -resultado + 
                 " Euros.\nEl pago se pasara en " + cuota + " cuotas de 200 euros y\n otro cobro de " + restoDivisionEntera(-resultado, (cuota * 200))+ " Euros.";   
-        }
+            }
         }else{
             texto = "El resultado ha sido NEGATIVO,\nse tiene que pagar " + resultado + 
             " Euros.\nEl pago se pasara en 5 cuotas de " + redondeo2decimales(resultado / -5) +" Euros.";
