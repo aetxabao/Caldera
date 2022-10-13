@@ -5,37 +5,53 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Rubén Gurrea
  * @version 1.0
  */
 public class Caldera {
-    
-    // TODO: CONSTANTES
 
     /** El IVA se aplica a todos los gasto. */
+    private final double IMP_IVA = 0.22;
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
-    
+    private final double IMP_HIDROCARBUROS = 0.20;
 
     // Conceptos gastos
-    
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
+    private final char NADA = 'N';
 
     // Ningun mes
-    
+    private String NINGUNO = "0";
 
     // Periodos
-    
-
-    
-    // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
+    private final char PERIODO_OCTUBRE_DICIEMBRE = '1';
+    private final char PERIODO_ENERO_MARZO = '2';
+    private final char PERIODO_ABRIL_JUNIO = '3';
+    private final char PERIODO_JULIO_SEPTIEMBRE = '4';
 
     // vecinos y presupuesto
-    
+    private int vecinos;
+    private double presupuesto;
 
     // acumulados
-
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
+    
     // estadisticas
-
+    private int mesMasConsumo;
+    private double maxConsumo;
+    private int mesMasCaro;
+    private double maxPrecio;
+    private int mesMasBarato;
+    private double minPrecio;
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    private int mesMasGasto;
+    private double maxGasto;
+    private String conceptoMasGasto;
     
     
     
@@ -44,7 +60,27 @@ public class Caldera {
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      */
-    
+    public Caldera()
+    {
+        vecinos = 0;
+        presupuesto = 0;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = 0;
+        maxConsumo = 0;
+        mesMasCaro = 0;
+        maxPrecio = 0;
+        mesMasBarato = 0;
+        minPrecio = 0;
+        periodoMasMantenimiento = 0;
+        maxMantenimiento = 0;
+        mesMasGasto = 0;
+        maxGasto = 0;
+        conceptoMasGasto = "Nada";
+        NINGUNO = "Nada";
+    }
 
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
@@ -53,7 +89,27 @@ public class Caldera {
      * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
      *                       gastos
      */
-    
+    public Caldera(int queVecinos, double quePresupuesto)
+    {
+        vecinos = queVecinos;
+        presupuesto = quePresupuesto;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = 0;
+        maxConsumo = 0;
+        mesMasCaro = 0;
+        maxPrecio = 0;
+        mesMasBarato = 0;
+        minPrecio = 0;
+        periodoMasMantenimiento = 0;
+        maxMantenimiento = 0;
+        mesMasGasto = 0;
+        maxGasto = 0;
+        conceptoMasGasto = "Nada";
+        NINGUNO = "Nada";
+    }
 
     
     // TODO: getters y setters
@@ -63,28 +119,40 @@ public class Caldera {
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
-    
+    public void setPresupuesto (double quePresupuesto)
+    {
+        presupuesto = quePresupuesto;
+    }
 
     /**
      * Obtiene el valor del presupuesto
      * 
      * @return valor del presupuesto, ej. 38638
      */
-    
+    public double getPresupuesto()
+    {
+        return presupuesto;
+    }
 
     /**
      * Fija el numero de vecinos de la comunidad
      * 
      * @param queVecinos numero de vecinos, ej. 48
      */
-    
+    public void setVecinos (int queVecinos)
+    {
+        vecinos = queVecinos;
+    }
 
     /**
      * Obtiene el numero de vecinos
      * 
      * @return numero de vecinos, ej. 48
      */
-    
+    public int getVecinos()
+    {
+        return vecinos;
+    }    
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
@@ -93,8 +161,31 @@ public class Caldera {
      * @param gas    Cantidad de gas consumido en KWh, ej. 15496
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
-    public void consumo(int mes, int gas, double precio) {
+    public void consumo(int mes, int gas, double precio) 
+    {
         // TODO: consumo
+        acumuladoConsumo += precio;
+        if (acumuladoConsumo == precio)
+        {
+            mesMasBarato = mes;
+            mesMasCaro = mes;
+        }
+        if (gas > maxConsumo)
+        {
+            maxConsumo = gas;
+            mesMasConsumo = mes;
+        }
+        double total€KW = precio / gas;
+        if (total€KW > maxPrecio)
+        {
+            maxPrecio = total€KW;
+            mesMasCaro = mes;
+        }
+        if (total€KW < minPrecio || minPrecio == 0)
+        {
+            minPrecio = total€KW;
+            mesMasBarato = mes;
+        }
     }
 
     /**
@@ -105,6 +196,33 @@ public class Caldera {
      */
     public void mantenimiento(int periodo, double importe) {
         // TODO: mantenimiento
+        //TENGO MUCHA DUDA AQUI
+        acumuladoMantenimiento += importe;
+        if (periodo == 1)
+        {
+            periodo = PERIODO_OCTUBRE_DICIEMBRE;
+        }
+        else if (periodo == 2)
+        {
+            periodo = PERIODO_ENERO_MARZO;
+        }
+        else if (periodo == 3)
+        {
+            periodo = PERIODO_ABRIL_JUNIO;
+        }
+        else if (periodo == 4)
+        {
+            periodo = PERIODO_JULIO_SEPTIEMBRE;
+        }
+        
+        if (acumuladoMantenimiento == importe)
+        {
+            periodoMasMantenimiento = periodo;
+        }
+        if (importe > maxMantenimiento || maxMantenimiento == 0)
+        {
+            maxMantenimiento = importe;
+        }
     }
 
     /**
