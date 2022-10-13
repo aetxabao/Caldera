@@ -9,42 +9,70 @@
  * @version 1.0
  */
 public class Caldera {
-    
-    // TODO: CONSTANTES
 
-    /** El IVA se aplica a todos los gasto. */
-    
-    /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
-    
+    // Tipos de impuestos
+    final private double IMP_IVA = 0.22;
+    final private double IMP_HIDROVARBUROS = 0.20;
 
     // Conceptos gastos
-    
+    final private char AGUA = 'A';
+    final private char LUZ = 'L';
+    final private char NADA = 'N';
 
     // Ningun mes
-    
+    final private int NINGUNO = 0;
 
     // Periodos
-    
+    final private int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    final private int PERIODO_ENERO_MARZO = 2;
+    final private int PERIODO_ABRIL_JUNIO = 3;
+    final private int PERIODO_JULIO_SEPTIEMBRE = 4;
 
-    
     // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
-
     // vecinos y presupuesto
-    
+    private int vecinos;
+    private double presupuesto;
 
     // acumulados
-
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private int gastoAgua;
+    private int gastoLuz;
     // estadisticas
+    private int mesMasConsumo;
+    private double maxConsumo;
+    private int mesMasCaro;
+    private double maxPrecio;
+    private int mesMasBarato;
+    private double minPrecio;
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    private int mesMasGasto;
+    private double maxGasto;
+    private char conceptoMasGasto;
 
-    
-    
-    
     // TODO: constructores
-    
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      */
-    
+
+    public Caldera (){
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento  =0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NADA;
+        mesMasCaro = NINGUNO;
+        maxPrecio = NADA;
+        mesMasBarato = NINGUNO;
+        minPrecio = NADA;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = NADA;
+        mesMasGasto = NINGUNO;
+        maxGasto = NADA;
+        conceptoMasGasto = NADA;  
+    }
 
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
@@ -53,38 +81,54 @@ public class Caldera {
      * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
      *                       gastos
      */
-    
+    public Caldera (int queVecinos,int quePresupuesto){
+        vecinos = queVecinos;
+        presupuesto = quePresupuesto;
+    }
 
-    
     // TODO: getters y setters
-    
+
+    public int getVecinos (){
+        return vecinos;
+    }
+
+    public void setVecinos(int queVecinos){
+        vecinos = queVecinos;
+    }
+
+    public void setPresupuesto(double quePresupuesto){
+        presupuesto = quePresupuesto;
+
+    }
+
+    public double getPresupuesto(){
+        return presupuesto;
+    }
     /**
+     * 
+     * 
      * Fija el valor del presupuesto
      * 
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
-    
 
     /**
      * Obtiene el valor del presupuesto
      * 
      * @return valor del presupuesto, ej. 38638
      */
-    
 
     /**
      * Fija el numero de vecinos de la comunidad
      * 
      * @param queVecinos numero de vecinos, ej. 48
      */
-    
 
     /**
      * Obtiene el numero de vecinos
      * 
      * @return numero de vecinos, ej. 48
      */
-    
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
@@ -94,7 +138,20 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        double consumo = gas * precio;
+        if (consumo > maxConsumo){
+            maxConsumo = consumo;
+            mesMasConsumo = mes;
+        }
+        if(precio > maxPrecio){
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        if( precio < minPrecio){
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }        
+        //TODO
     }
 
     /**
@@ -115,7 +172,7 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
-        // TODO: gasto
+
     }
 
     /**
