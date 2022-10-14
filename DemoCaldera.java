@@ -23,7 +23,7 @@ public class DemoCaldera {
                 239.02 };
         double[] gastosAgua = { 167.01, 202.39, 221.08, 239.75, 265.29, 239.42, 236.45, 225.57, 248.30, 208.77, 195.91,
                 197.89 };
-        double[] gastosManto = { 1552.10, 912.86, 846.31, 846.31 };
+        double[] gastosManto = { 912.86, 846.31, 846.31, 1552.10, };
         caldera.setVecinos(vecinos);
         caldera.setPresupuesto(presupuesto);
         int mes, gas;
