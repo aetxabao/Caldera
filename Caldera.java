@@ -5,47 +5,105 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Andrei Grozavu
  * @version 1.0
  */
 public class Caldera {
     
     // TODO: CONSTANTES
-
+    
     /** El IVA se aplica a todos los gasto. */
+
+    private final double IMP_IVA = 0.22;
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
     
+    private final double IMP_HIDROCARBUROS = 0.20;
+    
 
     // Conceptos gastos
-    
+        
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
+    private final char NADA = 'N';
 
     // Ningun mes
     
+    private final int NINGUNO = 0;
 
     // Periodos
     
-
+    private final int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    private final int PERIODO_ENERO_MARZO = 2;
+    private final int PERIODO_ABRIL_JUNIO = 3;
+    private final int PERIODO_JULIO_SEPTIEMBRE = 4;
     
     // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
 
     // vecinos y presupuesto
     
+    private int vecinos;
+    private double presupuesto;
 
     // acumulados
+    
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
 
     // estadisticas
 
+    private int mesMasConsumo;
+    private double maxConsumo;
     
+    private int mesMasCaro;
+    private double maxPrecio;
+    
+    private int mesMasBarato;
+    private double minPrecio;
+    
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    
+    private int mesMasGasto;
+    private double maxGasto;
+    private double conceptoMasGasto;
     
     
     // TODO: constructores
+    
     
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      */
     
-
+    public Caldera(){
+        vecinos = 0;
+        presupuesto = 0;
+        
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        
+        mesMasConsumo = NINGUNO;
+        maxConsumo = 0;
+        
+        mesMasCaro = 0;
+        maxPrecio = 0;
+        
+        mesMasBarato = NINGUNO;
+        minPrecio = 0;
+        
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = 0;
+        
+        mesMasGasto = NINGUNO;
+        maxGasto = 0;
+        conceptoMasGasto = NADA;
+    }
+    
     /**
      * Constructor de la clase Caldera. Inicializa los atributos.
      * 
@@ -54,7 +112,11 @@ public class Caldera {
      *                       gastos
      */
     
-
+    public Caldera(int queVecinos, int quePresupuesto)
+    {
+        vecinos = queVecinos;
+        presupuesto = quePresupuesto;
+    }
     
     // TODO: getters y setters
     
@@ -64,12 +126,21 @@ public class Caldera {
      * @param quePresupuesto Valor del presupuesto, ej. 38638
      */
     
+    public void setPresupuesto(double quePresupuesto)
+    {
+        presupuesto = quePresupuesto;
+    }
 
     /**
      * Obtiene el valor del presupuesto
      * 
      * @return valor del presupuesto, ej. 38638
      */
+    
+    public double getPresupuesto()
+    {
+        return presupuesto;
+    }
     
 
     /**
@@ -78,13 +149,21 @@ public class Caldera {
      * @param queVecinos numero de vecinos, ej. 48
      */
     
+    public void setVecinos(int queVecinos)
+    {
+        vecinos = queVecinos;
+    }
 
     /**
      * Obtiene el numero de vecinos
      * 
      * @return numero de vecinos, ej. 48
      */
-    
+
+    public int getVecinos()
+    {
+        return vecinos;
+    }
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
