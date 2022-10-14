@@ -283,8 +283,6 @@ public class Caldera {
      */
     public void printResultados() 
     {
-        // TODO: printResultados
-        //TODO: redondear los decimales
         double impuestosGas = (acumuladoConsumo * 0.22)*0.20;
         double impuestosManto = acumuladoMantenimiento * 0.22;
         double impuestosAgua = gastoAgua * 0.22;
@@ -338,7 +336,6 @@ public class Caldera {
      */
     public void printEstadisticas() 
     {
-        // TODO: printEstadisticas
         System.out.println("==================");
         System.out.println("   ESTADISTICAS");
         System.out.println("==================");
@@ -358,7 +355,6 @@ public class Caldera {
      */
     public String getNombreMes(int numMes) 
     {
-        // TODO: getNombreMes
         switch (numMes)
         {
             case 1:
@@ -398,7 +394,6 @@ public class Caldera {
      */
     public String getNombreConcepto(char concepto) 
     {
-        // TODO: getNombreConcepto
         if (concepto == 'L')
         {
             return "LUZ";
@@ -420,8 +415,8 @@ public class Caldera {
      * @return Nombre del periodo con nombres de los meses separados por guion, ej.
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
-    public String getNombrePeriodo(int numPeriodo) {
-        // TODO: getNombrePeriodo
+    public String getNombrePeriodo(int numPeriodo) 
+    {
         switch (numPeriodo)
         {
             case 1:
@@ -470,7 +465,6 @@ public class Caldera {
      */
     public String analisisResultado(double resultado) 
     {
-        // TODO: analisisResultado
         if (resultado > 0)
         {
             System.out.println("El resultado ha sido POSITIVO,");
@@ -542,7 +536,6 @@ public class Caldera {
      */
     public double redondeo2decimales(double valor) 
     {
-        // TODO: redondeo2decimales
         double valorDouble = valor * 100;
         int valorEntero = (int) valorDouble;
         double valorDouble2 = (double) valorEntero;
@@ -561,7 +554,6 @@ public class Caldera {
      */
     public int divisionEntera(double dividendo, int divisor) 
     {
-        // TODO: divisionEntera
         double divisionDouble = dividendo / divisor;
         int divisionEntero = (int) divisionDouble;
         return divisionEntero;
@@ -577,7 +569,6 @@ public class Caldera {
      */
     public double restoDivisionEntera(double dividendo, int divisor) 
     {
-        // TODO: restoDivisionEntera
         double divisionDouble = dividendo / divisor;
         int divisionEntera = (int) divisionDouble;
         int cuotasAPagar = divisor * divisionEntera;
