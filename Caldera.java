@@ -152,7 +152,9 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        System.out.println("En " + getNombreMes(mes) + " se han consumido "+ gas +" KWh a un precio de " + precio +
+        " Euros/KWh ");
+        
     }
 
     /**
@@ -343,13 +345,23 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        if (resultado > 0)
+        double cuotas;
+        double aPagar = 200 - resultado;
+        if(resultado > 0)
         {
-            String str = "El resultado ha sido POSITIVO,"+ </br> +"se devolvera"+ resultado +"Euros"
-            +</br>+"El pago se realizara en breve en"+</br>+"una transferencia";
+            String mensaje = "El resultado ha sido POSITIVO, \t se devolvera" + resultado +  
+            "Euros.\t El pago se realizara en breve en \t en una transferencia";
+            return mensaje;
+        }else if (resultado < 0 && resultado <= 200)
+        {
+            String mensaje = "El resultado ha sido NEGATIVO, \t se tiene que pagar" + aPagar +  
+            "Euros.\t El pago se pasara en un solo cobro";
+            return mensaje;
+        }else if (aPagar <= 600)
+        {
+            
         }
-
-        return string;
+        return "";
     }
 
     /**
@@ -365,8 +377,8 @@ public class Caldera {
      *         -1311.4749070125 -> -1311.47
      */
     public double redondeo2decimales(double valor) {
-        double redondeoValor = Math.round(valor*100.0)/100.0;
-        return redondeoValor;
+        double valorRedondeado = Math.round(valor*100.0)/100.0;
+        return valorRedondeado;
     }
 
     /**
@@ -379,8 +391,8 @@ public class Caldera {
      *         3
      */
     public int divisionEntera(double dividendo, int divisor) {
-        // TODO: divisionEntera
-        return 0;
+        int division = (int)dividendo / divisor;
+        return division;
     }
 
     /**
@@ -392,8 +404,9 @@ public class Caldera {
      * @return Resto con decimales, ej. 47.55
      */
     public double restoDivisionEntera(double dividendo, int divisor) {
-        // TODO: restoDivisionEntera
-        return 0;
+        double division = dividendo % divisor;
+        double valorRedondeado = Math.round(division*100.0)/100.0;
+        return valorRedondeado;
     }
 
 }
