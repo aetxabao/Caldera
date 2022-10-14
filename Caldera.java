@@ -131,7 +131,10 @@ public class Caldera {
      */
     public void consumo(int mes, int gas, double precio) {
         // TODO: consumo
-        
+        acumuladoConsumo += (gas*precio);
+        if(mesMasConsumo > maxConsumo) {
+            
+        }
     }
 
     /**
@@ -189,6 +192,7 @@ public class Caldera {
      */
     public void printResultados() {
         // TODO: printResultados
+        
     }
 
     /**
@@ -215,8 +219,35 @@ public class Caldera {
      * @return Nombre del mes, ej. ENERO
      */
     public String getNombreMes(int numMes) {
-        // TODO: getNombreMes
-        return "";        
+        // DONE: getNombreMes
+        switch (numMes) {
+            case 1: 
+                return "Enero";
+            case 2:
+                return "Febrero";
+            case 3:
+                return "Marzo";
+            case 4:
+                return "Abril";
+            case 5:
+                return "Mayo";
+            case 6:
+                return "Junio";
+            case 7: 
+                return "Julio";
+            case 8:
+                return "Agosto";
+            case 9:
+                return "Septiembre";
+            case 10:
+                return "Octubre";
+            case 11:
+                return "Noviembre";
+            case 12:
+                return "Diciembre";
+            default: 
+                return "NINGUNO";
+        }   
     }
 
     /**
@@ -227,7 +258,13 @@ public class Caldera {
      */
     public String getNombreConcepto(char concepto) {
         // TODO: getNombreConcepto
-        return "";        
+        if(concepto == 'L') {
+            return "LUZ";
+        } else if(concepto == 'A') {
+            return "AGUA";
+        } else {
+            return "NADA";
+        }
     }
 
     /**
@@ -239,7 +276,18 @@ public class Caldera {
      */
     public String getNombrePeriodo(int numPeriodo) {
         // TODO: getNombrePeriodo
-        return "";        
+        switch(numPeriodo) {
+             case 1:
+                 return "PERIODO_OCTUBRE_DICIEMBRE";
+             case 2:
+                 return "PERIODO_ENERO_MARZO";
+             case 3:
+                 return "PERIODO_ABRIL_JUNIO";
+             case 4:
+                 return "PERIODO_JULIO_SEPTIEMBRE";
+             default:
+                 return "NINGUN PERIODO";
+        }  
     }
 
     /**
