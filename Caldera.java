@@ -19,7 +19,7 @@ public class Caldera {
     //Constantes gastos
     private final String AGUA = "A";
     private final String LUZ = "L";
-    private final String NADA = "N";
+    private final char NADA = 'N';
     
     //Constante Ningún mes
     private final int NINGUNO = 0;
@@ -78,7 +78,7 @@ public class Caldera {
         periodoMasMantenimiento = NINGUNO;
         
         //Atributo masGasto
-        conceptoMasGasto = 0;
+        conceptoMasGasto = NADA;
     }
     
         public Caldera(int queVecinos, double quePresupuesto)
@@ -236,8 +236,35 @@ public class Caldera {
      * @return Nombre del mes, ej. ENERO
      */
     public String getNombreMes(int numMes) {
-        // TODO: getNombreMes
-        return "";        
+        switch (numMes)
+        {
+            case 1:
+                return "Enero";
+            case 2:
+                return "Febrero";
+            case 3:
+                return "Marzo";
+            case 4:
+                return "Abril";
+            case 5:
+                return "Mayo";
+            case 6:
+                return "Junio";
+            case 7:
+                return "Julio";
+            case 8:
+                return "Agosto";
+            case 9:
+                return "Septiembre";
+            case 10:
+                return "Octubre";
+            case 11:
+                return "Noviembre";
+            case 12:
+                return "Diciembre";
+            default:
+                return "Enero";
+        }        
     }
 
     /**
@@ -247,8 +274,18 @@ public class Caldera {
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
     public String getNombreConcepto(char concepto) {
-        // TODO: getNombreConcepto
-        return "";        
+        if (concepto == 'L')
+        {
+            return "LUZ";
+        }
+        else if (concepto == 'A')
+        {
+            return "AGUA";
+        }
+        else
+        {
+            return "NADA";
+        }
     }
 
     /**
@@ -259,8 +296,19 @@ public class Caldera {
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
     public String getNombrePeriodo(int numPeriodo) {
-        // TODO: getNombrePeriodo
-        return "";        
+        switch (numPeriodo)
+        {
+            case 1:
+                return "OCTUBRE-DICIEMBRE";
+            case 2:
+                return "ENERO-MARZO";
+            case 3:
+                return "ABRIL-JUNIO";
+            case 4:
+                return "JULIO-SEPTIEMBRE";
+            default:
+                return "NINGUN PERIODO";
+        }
     }
 
     /**
@@ -295,8 +343,13 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        // TODO: analisisResultado
-        return "";
+        if (resultado > 0)
+        {
+            String str = "El resultado ha sido POSITIVO,"+ </br> +"se devolvera"+ resultado +"Euros"
+            +</br>+"El pago se realizara en breve en"+</br>+"una transferencia";
+        }
+
+        return string;
     }
 
     /**
@@ -312,8 +365,8 @@ public class Caldera {
      *         -1311.4749070125 -> -1311.47
      */
     public double redondeo2decimales(double valor) {
-        // TODO: redondeo2decimales
-        return 0;
+        double redondeoValor = Math.round(valor*100.0)/100.0;
+        return redondeoValor;
     }
 
     /**
