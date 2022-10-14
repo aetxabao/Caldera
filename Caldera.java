@@ -173,7 +173,34 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        // consumo
+        double euros = gas * precio;
+        
+        acumuladoConsumo += euros;
+        if (maxConsumo == 0){
+            maxConsumo += euros;
+            mesMasConsumo = mes;
+        }else if (maxConsumo < euros){
+            maxConsumo += euros;
+            mesMasConsumo = mes;
+        }
+        
+        if (maxPrecio == 0){
+            maxPrecio += euros;
+            mesMasCaro = mes;
+        }else if (maxPrecio < euros){
+            maxPrecio += euros;
+            mesMasCaro = mes;
+        }
+        
+        if (minPrecio == 0){
+            minPrecio += euros;
+            mesMasBarato = mes;
+        }else if (minPrecio > euros){
+            minPrecio += euros;
+            mesMasBarato = mes;
+        }
+        
     }
 
     /**
@@ -183,7 +210,41 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        // mantenimiento
+        acumuladoMantenimiento += importe;
+        double periodo1 = 0;
+        double periodo2 = 0;
+        double periodo3 = 0;
+        double periodo4 = 0;
+        
+        switch (periodo){
+            case 1:
+                periodo1 += importe;
+                break;
+            case 2:
+                periodo2 += importe;
+                break;
+            case 3:
+                periodo3 += importe;
+                break;
+            case 4: 
+                periodo4 += importe;
+                break;
+        }
+        
+        if (maxMantenimiento > periodo1){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }else if (maxMantenimiento > periodo2){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }else if (maxMantenimiento > periodo3){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }else{
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -194,7 +255,17 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
-        // TODO: gasto
+        // gasto
+        if (concepto == 'A'){
+            gastoAgua += importe;
+        }
+        gastoLuz += importe;
+        
+        if (maxGasto < importe){
+            maxGasto += importe;
+            conceptoMasGasto = concepto;
+            mesMasGasto = mes;
+        }
     }
 
     /**
@@ -231,6 +302,58 @@ public class Caldera {
      */
     public void printResultados() {
         // TODO: printResultados
+        double impuestos = ((acumuladoConsumo * IMP_IVA) + (acumuladoConsumo * IMP_HIDROCARBUROS));
+        double ivaMantenimiento = acumuladoMantenimiento * IMP_IVA;
+        double ivaAgua = gastoAgua * IMP_IVA;
+        double ivaLuz = gastoLuz * IMP_IVA;
+        
+        double total = presupuesto - acumuladoConsumo + impuestos + acumuladoMantenimiento + 
+                    ivaMantenimiento + gastoAgua + ivaAgua + gastoLuz + ivaLuz;
+        double aporteVecinosPresupuesto = presupuesto / vecinos;
+        double aporteVecinosGastos = total / vecinos;
+        double resultadoGastos = aporteVecinosPresupuesto - aporteVecinosGastos;
+        
+        String tipoResultado;
+        if (resultadoGastos < 0){
+            tipoResultado = "NEGATIVO";
+        }
+        tipoResultado = "POSITIVO";
+        
+        double cantidadCuotas = resultadoGastos / 5;
+        double cuotas1 = resultadoGastos / cantidadCuotas;
+        int cuotas2 = (int)cuotas1;
+        
+        
+        
+        
+        System.out.println("=================="+
+                            "\nRESULTADO GLOBAL"+
+                            "\n=================="+
+                            "\nPresupuesto:   "   + presupuesto +
+                            "\nConsumo gas:   "   + acumuladoConsumo +
+                            "\nImpuestos g.:  "   + impuestos +
+                            "\nMantenimiento: "   + acumuladoMantenimiento +
+                            "\nIVA manto.:    "   + ivaMantenimiento +
+                            "\nGasto agua:    "   + gastoAgua +
+                            "\nIVA agua:      "   + ivaAgua +
+                            "\nGasto luz:     "   + gastoLuz +
+                            "\nIVA luz:       "   + ivaLuz +
+                            "\n------------------"  +
+                            "\nTOTAL : " + total  +
+                            "\n------------------" +
+                            "\n==================" +
+                            "\nRESULTADO X VECINO" +
+                            "\n==================" +
+                            "\nVecinos:       "   + vecinos +
+                            "\nAporte v.:     "   + aporteVecinosPresupuesto +
+                            "\nGasto v.:      "   + aporteVecinosGastos +
+                            "\nResultado:     "   + resultadoGastos +
+                            "\n------------------" +
+                            "\nEl resultado ha sido " + tipoResultado  + " ," +
+                            "\nse tiene que pagar " + resultadoGastos + " Euros." +
+                            "\nEl pago se pasara en " + 
+                            "\n"+ cuotas2 + " cuotas de " + cantidadCuotas + " Euros." +
+                            "\n------------------");
     }
 
     /**
