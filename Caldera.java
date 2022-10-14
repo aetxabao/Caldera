@@ -289,39 +289,31 @@ public class Caldera {
     public void printResultados() {
         double total = (presupuesto - acomuladoConsumo - ((IMP_IVA + IMP_HIDROCARBUROS) * acomuladoConsumo) - acomuladoMantenimiento - (IMP_IVA * acomuladoMantenimiento) - gastoAgua - (IMP_IVA * gastoAgua) - gastoLuz - (IMP_IVA * gastoLuz));
         double totalVecino = (total / vecinos);
-        String resultado = "";
-        if (total > presupuesto) resultado = "NEGATIVO,";
-        else if (total < presupuesto) resultado = "POSITIVO,";
         // TODO: printResultados
         System.out.println("==================");
         System.out.println("RESULTADO GLOBAL");
         System.out.println("==================");
         System.out.println("Presupuesto: " + presupuesto );
-        System.out.println("Consumo gas: " + acomuladoConsumo );
-        System.out.println("Impuestos g.: " + (IMP_IVA + IMP_HIDROCARBUROS) * acomuladoConsumo );
+        System.out.println("Consumo gas: " + redondeo2decimales(acomuladoConsumo) );
+        System.out.println("Impuestos g.: " + redondeo2decimales((IMP_IVA + IMP_HIDROCARBUROS) * acomuladoConsumo ));
         System.out.println("Mantenimiento " + acomuladoMantenimiento );
-        System.out.println("Iva manto.: " + (IMP_IVA * acomuladoMantenimiento));
+        System.out.println("Iva manto.: " + redondeo2decimales((IMP_IVA * acomuladoMantenimiento)));
         System.out.println("Gasto agua: " + gastoAgua );
-        System.out.println("Iva agua: " + (IMP_IVA * gastoAgua));
+        System.out.println("Iva agua: " + redondeo2decimales((IMP_IVA * gastoAgua)));
         System.out.println("Gasto luz: " + gastoLuz );
-        System.out.println("Iva luz: " + (IMP_IVA * gastoLuz));
+        System.out.println("Iva luz: " + redondeo2decimales((IMP_IVA * gastoLuz)));
         System.out.println("------------------");
-        System.out.println("TOTAL : " + total );
+        System.out.println("TOTAL : " + redondeo2decimales(total) );
         System.out.println("------------------");
         System.out.println("==================");
         System.out.println("RESULTADO X VECINO");
         System.out.println("==================");
         System.out.println("Vecinos: " + vecinos );
-        System.out.println("Aporte v.: " + (presupuesto / vecinos));
-        System.out.println("Gasto v.: " + (total - presupuesto) / vecinos);
-        System.out.println("Resultado: " + (total / vecinos));
+        System.out.println("Aporte v.: " + redondeo2decimales((presupuesto / vecinos)));
+        System.out.println("Gasto v.: " + redondeo2decimales(((total - presupuesto)) / vecinos)*(-1));
+        System.out.println("Resultado: " + redondeo2decimales((total / vecinos)));
         System.out.println("------------------");
-        System.out.println("El resultado ha sido " + resultado);
-        System.out.println("se tiene que pagar " + totalVecino + " Euros.");
-        System.out.println("El pago se pasara en");
-        // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        System.out.println("==================");
-        System.out.println("------------------");
+        System.out.println(analisisResultado((total / vecinos)));
     }
 
     /**
@@ -342,11 +334,11 @@ public class Caldera {
         System.out.println("==================");
         System.out.println("ESTADISTICAS");
         System.out.println("==================");
-        System.out.println("Max. consumo:\t" + mesMasConsumo + "\t" + maxConsumo);
-        System.out.println("Mes mas caro:\t" + mesMasCaro + "\t" + maxPrecio);
-        System.out.println("Mes mas barato:\t" + mesMasBarato + "\t" + minPrecio);
-        System.out.println("Mayor gasto en:\t" + mesMasGasto + "\t" + maxGasto + conceptoMasGasto);
-        System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + "\t" + maxMantenimiento);
+        System.out.println("Max. consumo:\t" + getNombreMes(mesMasConsumo) + "\t" + redondeo2decimales(maxConsumo));
+        System.out.println("Mes mas caro:\t" + getNombreMes(mesMasCaro) + "\t" + maxPrecio);
+        System.out.println("Mes mas barato:\t" + getNombreMes(mesMasBarato) + "\t" + minPrecio);
+        System.out.println("Mayor gasto en:\t" + getNombreMes(mesMasGasto) + "\t" + redondeo2decimales(maxGasto) + "\t" + getNombreConcepto(conceptoMasGasto));
+        System.out.println("P. mas manto.:\t" + getNombrePeriodo(periodoMasMantenimiento) + "\t" + redondeo2decimales(maxMantenimiento));
         System.out.println("------------------");
     }
 
@@ -495,8 +487,15 @@ public class Caldera {
      *         -1311.4749070125 -> -1311.47
      */
     public double redondeo2decimales(double valor) {
+        double parteEntera;
+        double numero;
+        numero = valor;
+        parteEntera = Math.floor(numero);
+        numero = (numero-parteEntera)*100.0;
+        numero = Math.round(numero);
+        numero = (numero/100.0)+parteEntera;
+        return numero;
         // TODO: redondeo2decimales
-        return 0;
     }
 
     /**
@@ -509,8 +508,10 @@ public class Caldera {
      *         3
      */
     public int divisionEntera(double dividendo, int divisor) {
+        int cociente;
+        cociente = ((int)dividendo / divisor);
         // TODO: divisionEntera
-        return 0;
+        return cociente;
     }
 
     /**
@@ -522,8 +523,10 @@ public class Caldera {
      * @return Resto con decimales, ej. 47.55
      */
     public double restoDivisionEntera(double dividendo, int divisor) {
+        double resto;
+        resto = (dividendo % divisor);
         // TODO: restoDivisionEntera
-        return 0;
+        return resto;
     }
 
 }
