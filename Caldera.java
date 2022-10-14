@@ -58,7 +58,7 @@ public class Caldera {
     
     private int mesMasGasto;
     private double maxGasto;
-    private int conceptoMasGasto;
+    private char conceptoMasGasto;
     
     // constructores
     
@@ -148,15 +148,14 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
         double euros = precio * gas;
         System.out.println(" En el mes de " + getNombreMes(mes) + " se han consumido " + gas + 
         "KWh a un precio de " + euros + " Euros/KWh");
         acumuladoConsumo += euros;
-        if (precio >= maxPrecio){
+        if (precio > maxPrecio){
             maxPrecio = precio;
             mesMasCaro = mes;
-        }else if (precio <= minPrecio){
+        }else if (precio < minPrecio){
             minPrecio = precio;
             mesMasBarato = mes;
         }
@@ -173,7 +172,34 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        double periodo1T = 0;
+        double periodo2T = 0;
+        double periodo3T = 0;
+        double periodo4T = 0;
+        acumuladoMantenimiento += importe;
+        if(periodo == 1){
+            periodo1T += importe;
+        }else if(periodo == 2){
+            periodo2T += importe;
+        }else if(periodo == 3){
+            periodo3T += importe;
+        }else{
+            periodo4T += importe;
+        }
+        
+        if(periodo1T > maxMantenimiento){
+            maxMantenimiento = periodo1T;
+            periodoMasMantenimiento = periodo;
+        }else if(periodo2T > maxMantenimiento){
+            maxMantenimiento = periodo2T;
+            periodoMasMantenimiento = periodo;
+        }else if(periodo3T > maxMantenimiento){
+            maxMantenimiento = periodo3T;
+            periodoMasMantenimiento = periodo;
+        }else{
+            maxMantenimiento = periodo4T;
+            periodoMasMantenimiento = periodo;
+        }
         
     }
 
@@ -185,9 +211,17 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
-        // TODO: gasto
+        if(concepto == 'A'){
+            gastoAgua += importe;
+        }else{
+            gastoLuz += importe;
+        }
         
-        
+        if(importe > maxGasto){
+            maxGasto = importe;
+            conceptoMasGasto = concepto;
+            mesMasGasto = mes;
+        }
     }
 
     /**
@@ -223,7 +257,6 @@ public class Caldera {
      * ------------------
      */
     public void printResultados() {
-        // TODO: printResultados
         double impuestoG = (acumuladoConsumo / IMP_IVA) + (acumuladoConsumo / IMP_HIDROCARBUROS);
         double ivaMantenimiento = acumuladoMantenimiento / IMP_IVA;
         double ivaAgua = gastoAgua / IMP_IVA;
@@ -240,7 +273,7 @@ public class Caldera {
         String sResultado;
         
         System.out.println("================== \n" +
-                            "RESULTADO GLOBAL \n" +
+                            " RESULTADO GLOBAL \n" +
                            "================== \n");
                            
         System.out.println("Presupuesto: " + presupuesto + "\n Consumo gas: " + acumuladoConsumo +
@@ -284,10 +317,15 @@ public class Caldera {
      * ------------------
      */
     public void printEstadisticas() {
-        // TODO: printEstadisticas
         
-        
-        
+        System.out.println("================== \n" +
+                          "   ESTADISTICAS \n" +
+                           "================== \n");
+                           
+        System.out.println("Max. consumo: " + getNombreMes(mesMasConsumo) + " " + maxConsumo + "\n Mes mas caro: " + getNombreMes(mesMasCaro) + " "
+        + maxPrecio + "\n Mes mas barato: " + getNombreMes(mesMasBarato) + " " + minPrecio + "\n Mayor gasto en: " + getNombreMes(mesMasGasto) + " " + maxGasto + " " +
+        getNombreConcepto(conceptoMasGasto) + "\n P. mas manto.: " + getNombrePeriodo(periodoMasMantenimiento) + " "+ maxMantenimiento);
+         
     }
 
     /**
@@ -376,9 +414,9 @@ public class Caldera {
     /**
      * Analiza el resultado, si el valor es negativo se tendra que pagar si es
      * positivo se devolvera.
-     * En el caso negativo se debera pagar de una vez si el importe en menor o igual
+     * En el caso negativo se debera pagar de una vez si el importe es menor o igual
      * que 200,
-     * en multiplos de 200 y el resto si el resultado es menor o igual que 600 o
+     * es multiplo de 200 y el resto si el resultado es menor o igual que 600 o
      * en 5 partes alicuotas sino.
      * 
      * @param resultado cantidad positiva o negativa, ej. -1311.47
@@ -405,8 +443,29 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        // TODO: analisisResultado
-        return "";
+        String sResultado = "";
+        if(resultado < 0 && resultado <= 200){
+            sResultado = "El resultado ha sido NEGATIVO, \n se tiene que pagar " + resultado + " Euros.\n" +
+            "El pago se pasara en un solo cobro";
+        }else if (resultado <= 600){
+            int cuotas = 0;
+            double resto = 0;
+            int x = (int)resultado;
+            cuotas = x / 200;
+            resto = resultado % cuotas;
+            sResultado = "El resultado ha sido NEGATIVO, \n se tiene que pagar " + resultado + " Euros.\n" +
+            "El pago se pasara en " + cuotas + " cuota(s) de 200 Euros y otro cobro de " + resto + " Euros." ;
+        }else if(resultado > 600){
+            double x = (double)5;
+            double cantidad = resultado / x;
+            sResultado = "El resultado ha sido NEGATIVO, \n se tiene que pagar " + resultado + " Euros.\n" +
+            "El pago se pasara en 5 cuotas de " + cantidad + " Euros.";
+        }else{
+            sResultado = "El resultado ha sido POSITIVO, \n se devolvera " + resultado + " Euros.\n" +
+            "El pago se realizara en breve en una transferencia";
+        }
+       
+        return sResultado;
     }
 
     /**
