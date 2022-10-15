@@ -174,7 +174,7 @@ public class Caldera {
      */
     public void consumo(int mes, int gas, double precio) {
         // consumo
-        double euros = gas * precio;
+        double euros = (gas * precio);
         
         acumuladoConsumo += euros;
         if (maxConsumo == 0){
@@ -307,7 +307,7 @@ public class Caldera {
         double ivaAgua = gastoAgua * IMP_IVA;
         double ivaLuz = gastoLuz * IMP_IVA;
         
-        double total = presupuesto - acumuladoConsumo + impuestos + acumuladoMantenimiento + 
+        double total = - presupuesto - acumuladoConsumo + impuestos + acumuladoMantenimiento + 
                     ivaMantenimiento + gastoAgua + ivaAgua + gastoLuz + ivaLuz;
         double aporteVecinosPresupuesto = presupuesto / vecinos;
         double aporteVecinosGastos = total / vecinos;
@@ -371,6 +371,14 @@ public class Caldera {
      */
     public void printEstadisticas() {
         // TODO: printEstadisticas
+        System.out.println("=================="+
+                            "\n ESTADISTICAS"+
+                            "\n=================="+
+                            "\nMax consumo:    "   + getNombreMes(mesMasConsumo) + "  " + maxConsumo +
+                            "\nMes mas caro:   "   + getNombreMes(mesMasCaro)    + "  " + maxPrecio  +
+                            "\nMes mas barato: "   + getNombreMes(mesMasBarato)  + "  " + minPrecio  +
+                            "\nMayor gasto en: "   + getNombreMes(mesMasGasto)   + "  " + maxGasto   + "  " +  conceptoMasGasto +
+                            "\nP. mas manto.:  "   + getNombrePeriodo(periodoMasMantenimiento)  + "  " +  maxMantenimiento);
     }
 
     /**
@@ -380,8 +388,35 @@ public class Caldera {
      * @return Nombre del mes, ej. ENERO
      */
     public String getNombreMes(int numMes) {
-        // TODO: getNombreMes
-        return "";        
+        // getNombreMes
+        switch (numMes){
+            case 1:
+                return "ENERO";
+            case 2:
+                return "FEBRERO";
+            case 3:
+                return "MARZO";
+            case 4:
+                return "ABRIL";
+            case 5:
+                return "MAYO";
+            case 6:
+                return "JUNIO";
+            case 7:
+                return "JULIO";
+            case 8:
+                return "AGOSTO";
+            case 9:
+                return "SEPTIEMBRE";
+            case 10:
+                return "OCTUBRE";
+            case 11:
+                return "NOVIEMBRE";
+            case 12:
+                return "DICIEMBRE";
+        }
+        
+        return "NINGUNO";        
     }
 
     /**
@@ -391,8 +426,13 @@ public class Caldera {
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
     public String getNombreConcepto(char concepto) {
-        // TODO: getNombreConcepto
-        return "";        
+        // getNombreConcepto
+        if (concepto == 'A'){
+            return "AGUA";
+        }else if (concepto == 'L'){
+            return "LUZ";
+        }
+        return "NADA";        
     }
 
     /**
@@ -403,8 +443,18 @@ public class Caldera {
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
     public String getNombrePeriodo(int numPeriodo) {
-        // TODO: getNombrePeriodo
-        return "";        
+        // getNombrePeriodo
+        switch (numPeriodo){
+            case 1:
+                return "OCTUBRE-DICIEMBRE";
+            case 2:
+                return "ENERO-MARZO";
+            case 3:
+                return "ABRIL-JUNIO";
+            case 4:
+                return "JULIO-SEPTIEMBRE";
+        }
+        return "NINGUNO";        
     }
 
     /**
