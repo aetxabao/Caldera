@@ -48,13 +48,13 @@ public class Caldera {
 
     // estadisticas
     private int mesMasConsumo;
-    private int maxConsumo;
+    private double maxConsumo;
     
     private int mesMasCaro;
-    private int maxPrecio;
+    private double maxPrecio;
     
     private int mesMasBarato;
-    private int minPrecio;
+    private double minPrecio;
     
     private int periodoMasMantenimiento;
     private int maxMantenimiento;
@@ -166,6 +166,34 @@ public class Caldera {
      */
     public void consumo(int mes, int gas, double precio) {
         // TODO: consumo
+        acumuladoConsumo += precio * gas;//total del consumo
+        
+        if (minPrecio > precio) {
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
+        else if (minPrecio == 0){
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
+        
+        if (maxPrecio < precio) {
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        else if (maxPrecio == 0){
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        
+        if (maxConsumo < acumuladoConsumo){
+            maxConsumo = precio * gas;
+            mesMasConsumo = mes;
+        }
+        else if (maxConsumo == 0){
+            maxConsumo = precio * gas;
+            mesMasConsumo = mes;
+        }
     }
 
     /**
@@ -176,6 +204,43 @@ public class Caldera {
      */
     public void mantenimiento(int periodo, double importe) {
         // TODO: mantenimiento
+        acumuladoMantenimiento += importe;
+        double primerPeriodo = 0;
+        double segundoPeriodo = 0;
+        double tercerPeriodo = 0;
+        double cuartoPeriodo = 0;
+
+        switch (periodo){
+            case 1:
+                primerPeriodo += importe;
+                break;
+            case 2:
+                segundoPeriodo += importe;
+                break;
+            case 3:
+                tercerPeriodo += importe;
+                break;
+            case 4: 
+                cuartoPeriodo += importe;
+                break;
+        }
+
+         if (maxMantenimiento > primerPeriodo){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }
+        else if (maxMantenimiento > segundoPeriodo){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }
+        else if (maxMantenimiento > tercerPeriodo){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }
+        else if (maxMantenimiento > cuartoPeriodo){
+            maxMantenimiento += importe;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -185,8 +250,10 @@ public class Caldera {
      * @param concepto Agua 'A' o luz 'L'
      * @param importe  Valor del gasto, ej. 189.03
      */
-    public void gasto(int mes, char concepto, double importe) {
+    
+    public void gasto(int mes, char concepto, double importe){
         // TODO: gasto
+        
     }
 
     /**
