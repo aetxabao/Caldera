@@ -17,8 +17,8 @@ public class Caldera {
     private final double IMP_HIDROCARBUROS = 0.22;
     
     //Constantes gastos
-    private final String AGUA = "A";
-    private final String LUZ = "L";
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
     private final char NADA = 'N';
     
     //Constante Ningún mes
@@ -42,11 +42,11 @@ public class Caldera {
     
     //Atributos meses
     private int mesMasConsumo;
-    private int maxConsumo;
+    private double maxConsumo;
     private int mesMasCaro;
-    private int maxCaro;
+    private double maxPrecio;
     private int mesMasBarato;
-    private int minPrecio;
+    private double minPrecio;
     
     //Otros Atributos
     private int periodoMasMantenimiento;
@@ -54,7 +54,7 @@ public class Caldera {
     
     //Atributos gastos
     private int mesMasGasto;
-    private double MaxGasto;
+    private double maxGasto;
     private double conceptoMasGasto;
     
     
@@ -70,7 +70,7 @@ public class Caldera {
         mesMasConsumo = NINGUNO;
         maxConsumo = NINGUNO;
         mesMasCaro = NINGUNO;
-        maxCaro = NINGUNO;
+        maxPrecio = NINGUNO;
         mesMasBarato = NINGUNO;
         minPrecio = NINGUNO;
             
@@ -91,7 +91,7 @@ public class Caldera {
         mesMasConsumo = NINGUNO;
         maxConsumo = NINGUNO;
         mesMasCaro = NINGUNO;
-        maxCaro = NINGUNO;
+        maxPrecio = NINGUNO;
         mesMasBarato = NINGUNO;
         minPrecio = NINGUNO;
             
@@ -155,6 +155,35 @@ public class Caldera {
         System.out.println("En " + getNombreMes(mes) + " se han consumido "+ gas +" KWh a un precio de " + precio +
         " Euros/KWh ");
         
+        double consumo = gas*precio;
+        acumuladoConsumo = gas*precio + acumuladoConsumo;
+        
+        if (consumo > maxConsumo)
+        {
+            consumo = maxConsumo;
+            mesMasConsumo = mes;
+        }
+        
+        if (maxPrecio < precio)
+        {
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        
+        /**
+         *Estan en if separados, por que si no al poner al llamar por primera vez al metodo, minimo, será 0 en vez del primer valor(ya que si solo llamamos 1 vez
+         *al metodo, tanto minimo y maximo seran el mismo precio.) 
+         */
+        if(minPrecio == 0)
+        {
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
+        else if(minPrecio > precio)
+        {
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
     }
 
     /**
@@ -164,7 +193,16 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        System.out.println("En el periodo "+ periodo +"," + getNombrePeriodo(periodo) + " el gasto de mantenimiento ha supuesto "+ importe +
+        " Euros");
+    
+        
+        acumuladoMantenimiento = importe + acumuladoConsumo;
+        if (importe > maxMantenimiento)
+        {
+            importe = maxMantenimiento;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -175,7 +213,25 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
-        // TODO: gasto
+        System.out.println("En " +  getNombreMes(mes) + " se ha gastado en "
+        + getNombreConcepto(concepto) +" " + importe + " Euros");
+        
+
+          if (concepto == 'L')
+        {
+            gastoLuz = gastoLuz + importe;
+        }
+        else if (concepto == 'A')
+        {
+            gastoAgua = gastoAgua + importe;
+        }
+        
+        if (importe > maxGasto)
+        {
+            maxGasto = importe;
+            mesMasGasto = mes;
+            conceptoMasGasto = concepto;
+        }
     }
 
     /**
@@ -211,7 +267,32 @@ public class Caldera {
      * ------------------
      */
     public void printResultados() {
-        // TODO: printResultados
+        System.out.println("=============================");
+        System.out.println("RESULTADO GLOBAL");
+        System.out.println("=============================");
+        System.out.println("Presupuesto:");
+        System.out.println("Consumo gas:");
+        System.out.println("Impuestos g.:");
+        System.out.println("Mantenimiento:");
+        System.out.println("Iva manto.:");
+        System.out.println("Gasto agua.:");
+        System.out.println("Iva agua.:");
+        System.out.println("Gasto luz.:");
+        System.out.println("Iva luz:");
+        System.out.println("------------------------------");
+        System.out.println("TOTAL:");
+        System.out.println("------------------------------");
+        System.out.println("==============================");
+        System.out.println("RESULTADO X VECINO");
+        System.out.println("Aporte v.:");
+        System.out.println("Gasto v,;");
+        System.out.println("Resultado:");
+        System.out.println("-------------------------------");
+        System.out.println("El resultado ha sido ");
+        System.out.println("se tiene que pagar " + "Euros");
+        System.out.println("El pago se pasara en ");
+        System.out.println(" cuotas de"+"Euros" );
+        System.out.println("--------------------------------");
     }
 
     /**
@@ -228,7 +309,15 @@ public class Caldera {
      * ------------------
      */
     public void printEstadisticas() {
-        // TODO: printEstadisticas
+        System.out.println("=============================");
+        System.out.println("ESTADISTICAS");
+        System.out.println("=============================");
+        System.out.println("Max. consumo:");
+        System.out.println("Mes mas caro:");
+        System.out.println("Mes mas barato:");
+        System.out.println("Mayor gasto en:");
+        System.out.println("P. mas manto.:");
+        System.out.println("-----------------------------");
     }
 
     /**
