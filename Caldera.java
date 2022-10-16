@@ -257,10 +257,10 @@ public class Caldera {
      * ------------------
      */
     public void printResultados() {
-        double impuestoG = (acumuladoConsumo / IMP_IVA) + (acumuladoConsumo / IMP_HIDROCARBUROS);
-        double ivaMantenimiento = acumuladoMantenimiento / IMP_IVA;
-        double ivaAgua = gastoAgua / IMP_IVA;
-        double ivaLuz = gastoLuz / IMP_IVA;
+        double impuestoG = (acumuladoConsumo * IMP_IVA) + (acumuladoConsumo * IMP_HIDROCARBUROS);
+        double ivaMantenimiento = acumuladoMantenimiento * IMP_IVA;
+        double ivaAgua = gastoAgua * IMP_IVA;
+        double ivaLuz = gastoLuz * IMP_IVA;
         
         double gTotal = acumuladoConsumo + acumuladoMantenimiento + gastoLuz + gastoAgua +
                impuestoG + ivaMantenimiento + ivaLuz + ivaAgua;
@@ -276,21 +276,21 @@ public class Caldera {
                             " RESULTADO GLOBAL \n" +
                            "================== \n");
                            
-        System.out.println("Presupuesto: " + presupuesto + "\n Consumo gas: " + acumuladoConsumo +
-        "\n Impuestos g.: " + impuestoG + "\n Mantenimiento: " + acumuladoMantenimiento + "\n Iva manto.: " + ivaMantenimiento +
-        "\n Gasto agua: " + gastoAgua + "\n Iva agua: "+ ivaAgua + "\n Gasto luz: "+ gastoLuz +
-        "\n Iva luz: "+ ivaLuz);
+        System.out.println("Presupuesto: " + presupuesto + "\n Consumo gas: " + redondeo2decimales(acumuladoConsumo) +
+        "\n Impuestos g.: " + redondeo2decimales(impuestoG) + "\n Mantenimiento: " + acumuladoMantenimiento + "\n Iva manto.: " + redondeo2decimales(ivaMantenimiento) +
+        "\n Gasto agua: " + gastoAgua + "\n Iva agua: "+ redondeo2decimales(ivaAgua) + "\n Gasto luz: "+ gastoLuz +
+        "\n Iva luz: "+ redondeo2decimales(ivaLuz));
         
         System.out.println("------------------ \n" +
-                        "TOTAL :" + total + "\n" +
+                        "TOTAL :" + redondeo2decimales(total) + "\n" +
                            "------------------ \n");
                            
         System.out.println("================== \n" +
                             "RESULTADO X VECINO \n" +
                            "================== \n");  
                            
-        System.out.println("Vecinos: " + vecinos + "\n Aporte v.: " + (presupuesto/vecinos) + "\n Gasto v.: " + gVecino +
-         "\n Resultado: " + vResultado );
+        System.out.println("Vecinos: " + vecinos + "\n Aporte v.: " + redondeo2decimales((presupuesto/vecinos)) + "\n Gasto v.: " + redondeo2decimales(gVecino) +
+         "\n Resultado: " + redondeo2decimales(vResultado));
         
         if(vResultado < 0){
             sResultado = "NEGATIVO";
@@ -299,8 +299,8 @@ public class Caldera {
         }
         
         
-        System.out.println("El resultado ha sido " + sResultado +",\n se tiene que pagar " + vResultado +
-        " Euros.\n El pago se pasara en \n 5 cuotas de " + (vResultado/5.0) + " Euros.");
+        System.out.println("El resultado ha sido " + sResultado +",\nse tiene que pagar " + Math.abs(redondeo2decimales(vResultado)) +
+        " Euros.\n El pago se pasara en \n 5 cuotas de " + Math.abs(redondeo2decimales((vResultado/5.0))) + " Euros.");
     }
 
     /**
@@ -464,7 +464,7 @@ public class Caldera {
             sResultado = "El resultado ha sido POSITIVO, \n se devolvera " + resultado + " Euros.\n" +
             "El pago se realizara en breve en una transferencia";
         }
-       
+        printResultados();   
         return sResultado;
     }
 
