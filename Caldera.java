@@ -300,6 +300,34 @@ public class Caldera {
      */
     public void printResultados() {
         // TODO: printResultados
+        double total = (presupuesto - acumuladoConsumo - ((ImpIva + ImpHidrocarburos) * acumuladoConsumo) - acumuladoMantenimiento - 
+        (ImpIva * acumuladoMantenimiento) - gastoAgua - (ImpIva * gastoAgua) - gastoLuz - (ImpIva * gastoLuz));
+        double vecinosTotales = (total / vecinos);
+        
+        System.out.println("==================");
+        System.out.println("RESULTADO GLOBAL");
+        System.out.println("==================");
+        System.out.println("Presupuesto: " + presupuesto );
+        System.out.println("Consumo gas: " + redondeo2decimales(acumuladoConsumo) );
+        System.out.println("Impuestos g.: " + redondeo2decimales((ImpIva + ImpHidrocarburos) * acumuladoConsumo ));
+        System.out.println("Mantenimiento " + acumuladoMantenimiento );
+        System.out.println("Iva manto.: " + redondeo2decimales((ImpIva * acumuladoMantenimiento)));
+        System.out.println("Gasto agua: " + gastoAgua );
+        System.out.println("Iva agua: " + redondeo2decimales((ImpIva * gastoAgua)));
+        System.out.println("Gasto luz: " + gastoLuz );
+        System.out.println("Iva luz: " + redondeo2decimales((ImpIva * gastoLuz)));
+        System.out.println("------------------");
+        System.out.println("TOTAL : " + redondeo2decimales(total) );
+        System.out.println("------------------");
+        System.out.println("==================");
+        System.out.println("RESULTADO X VECINO");
+        System.out.println("==================");
+        System.out.println("Vecinos: " + vecinos );
+        System.out.println("Aporte v.: " + redondeo2decimales((presupuesto / vecinos)));
+        System.out.println("Gasto v.: " + redondeo2decimales(((total - presupuesto)) / vecinos)*(-1));
+        System.out.println("Resultado: " + redondeo2decimales((total / vecinos)));
+        System.out.println("------------------");
+        System.out.println(analisisResultado((total / vecinos)));
     }
 
     /**
@@ -444,8 +472,27 @@ public class Caldera {
      */
     public String analisisResultado(double resultado) {
         // TODO: analisisResultado
-        return "";
+        if (resultado >= 0){
+           return "El resultado ha sido POSITIVO," + "\n" + "se devolvera " + resultado 
+           + " Euros." + "\n" + "El pago se realizara en breve en" + "\n" + "una transferencia.";
+
+        }
+        else if ((resultado >= -200) || (resultado < 0)){
+            return "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " 
+            + (-1 * resultado) + " Euros." + "\n" + "El pago se pasara en un solo cobro."; 
+        }
+        else if ((resultado >= -600) || (resultado < 0)){
+            return "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + resultado
+            + " Euros." + "\n" + "El pago se pasara en" + "\n" + ((int)resultado / 200) + "cuotas de 200 Euros y" 
+            + "\n" + "otro cobro de " + (resultado - (((int)resultado / 200)) * 200);
+        }
+        else if (resultado < -600){
+            return "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + resultado
+            + " Euros." + "\n" + "El pago se pasara en" + "\n" + "5 cuotas de " + (resultado / 5) + " Euros.";
+        }
+        return "Error";
     }
+    
 
     /**
      * Redondea un valor de tipo double a dos decimales.
@@ -461,7 +508,8 @@ public class Caldera {
      */
     public double redondeo2decimales(double valor) {
         // TODO: redondeo2decimales
-        return 0;
+        valor = Math.round(valor * 100) / 100.0;
+        return valor;
     }
 
     /**
@@ -475,7 +523,8 @@ public class Caldera {
      */
     public int divisionEntera(double dividendo, int divisor) {
         // TODO: divisionEntera
-        return 0;
+        int resultado = (int)dividendo / divisor;
+        return resultado;
     }
 
     /**
@@ -488,7 +537,8 @@ public class Caldera {
      */
     public double restoDivisionEntera(double dividendo, int divisor) {
         // TODO: restoDivisionEntera
-        return 0;
+        int result = (int)dividendo % divisor;
+        return result;
     }
 
 }
