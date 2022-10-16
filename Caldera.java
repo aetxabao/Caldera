@@ -267,32 +267,40 @@ public class Caldera {
      * ------------------
      */
     public void printResultados() {
+        double impuestosTotalGas = (acumuladoConsumo * IMP_IVA) + (acumuladoConsumo * IMP_HIDROCARBUROS);
+        double ivaMantenimiento = acumuladoMantenimiento * IMP_IVA;
+        double ivaAgua = gastoAgua * IMP_IVA;
+        double ivaLuz = gastoLuz * IMP_IVA;
+        double gastoTotal = (presupuesto - acumuladoConsumo - impuestosTotalGas - acumuladoMantenimiento - ivaMantenimiento -
+                            gastoAgua - ivaAgua - gastoLuz - ivaLuz);
+        double aporteVecino = presupuesto/vecinos;
+        double gastoVecino = (presupuesto + acumuladoConsumo + impuestosTotalGas + acumuladoMantenimiento + ivaMantenimiento + gastoAgua + ivaAgua + gastoLuz + ivaLuz)/vecinos;
+        double resultadoVecino = gastoVecino - aporteVecino;
         System.out.println("=============================");
-        System.out.println("RESULTADO GLOBAL");
+        System.out.println("       RESULTADO GLOBAL      ");
         System.out.println("=============================");
-        System.out.println("Presupuesto:");
-        System.out.println("Consumo gas:");
-        System.out.println("Impuestos g.:");
-        System.out.println("Mantenimiento:");
-        System.out.println("Iva manto.:");
-        System.out.println("Gasto agua.:");
-        System.out.println("Iva agua.:");
-        System.out.println("Gasto luz.:");
-        System.out.println("Iva luz:");
+        System.out.println("Presupuesto:\t"+ presupuesto);
+        System.out.println("Consumo gas:\t" + redondeo2decimales(acumuladoConsumo));
+        System.out.println("Impuestos g.:\t"+ redondeo2decimales(impuestosTotalGas));
+        System.out.println("Mantenimiento:\t" + redondeo2decimales(acumuladoMantenimiento));
+        System.out.println("Iva manto.:\t" + redondeo2decimales(ivaMantenimiento));
+        System.out.println("Gasto agua.:\t" + redondeo2decimales(gastoAgua));
+        System.out.println("Iva agua.:\t" + redondeo2decimales(ivaAgua));
+        System.out.println("Gasto luz.:\t" + redondeo2decimales(gastoLuz));
+        System.out.println("Iva luz:\t"+ redondeo2decimales(ivaLuz) );
         System.out.println("------------------------------");
-        System.out.println("TOTAL:");
+        System.out.println("TOTAL:\t" + redondeo2decimales(gastoTotal) + " Euros");
         System.out.println("------------------------------");
         System.out.println("==============================");
-        System.out.println("RESULTADO X VECINO");
-        System.out.println("Aporte v.:");
-        System.out.println("Gasto v,;");
-        System.out.println("Resultado:");
+        System.out.println("       RESULTADO X VECINO    ");
+        System.out.println("==============================");
+        System.out.println("Vecinos:\t" + vecinos);
+        System.out.println("Aporte v.:\t" + redondeo2decimales(aporteVecino));
+        System.out.println("Gasto v,;\t" + redondeo2decimales(gastoVecino));
+        System.out.println("Resultado:\t" + redondeo2decimales(resultadoVecino));
         System.out.println("-------------------------------");
-        System.out.println("El resultado ha sido ");
-        System.out.println("se tiene que pagar " + "Euros");
-        System.out.println("El pago se pasara en ");
-        System.out.println(" cuotas de"+"Euros" );
-        System.out.println("--------------------------------");
+        System.out.println(analisisResultado(resultadoVecino));
+        System.out.println("-------------------------------");
     }
 
     /**
@@ -310,13 +318,13 @@ public class Caldera {
      */
     public void printEstadisticas() {
         System.out.println("=============================");
-        System.out.println("ESTADISTICAS");
+        System.out.println("         ESTADISTICAS        ");
         System.out.println("=============================");
-        System.out.println("Max. consumo:");
-        System.out.println("Mes mas caro:");
-        System.out.println("Mes mas barato:");
-        System.out.println("Mayor gasto en:");
-        System.out.println("P. mas manto.:");
+        System.out.println("Max. consumo:\t"+ mesMasConsumo + redondeo2decimales(maxConsumo));
+        System.out.println("Mes mas caro:\t" + mesMasCaro + redondeo2decimales(maxPrecio));
+        System.out.println("Mes mas barato:\t" + mesMasBarato + redondeo2decimales(minPrecio));
+        System.out.println("Mayor gasto en:\t"+ mesMasGasto + redondeo2decimales(maxGasto) + conceptoMasGasto);
+        System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + redondeo2decimales(maxMantenimiento));
         System.out.println("-----------------------------");
     }
 
@@ -434,23 +442,29 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        double cuotas;
-        double aPagar = 200 - resultado;
-        if(resultado > 0)
+        String mensaje;
+        double cincoCuotas = resultado / 5;
+        double dosCuotas = resultado / 2;
+        if (resultado > 600)
         {
-            String mensaje = "El resultado ha sido POSITIVO, \t se devolvera" + resultado +  
-            "Euros.\t El pago se realizara en breve en \t en una transferencia";
+            mensaje = "El resultado es NEGATIVO,\n se tiene que pagar " + redondeo2decimales(resultado) + " Euros.\n El pago se pasara \n en 5 cuotas de " + redondeo2decimales(cincoCuotas);
             return mensaje;
-        }else if (resultado < 0 && resultado <= 200)
-        {
-            String mensaje = "El resultado ha sido NEGATIVO, \t se tiene que pagar" + aPagar +  
-            "Euros.\t El pago se pasara en un solo cobro";
-            return mensaje;
-        }else if (aPagar <= 600)
-        {
-            
         }
-        return "";
+        else if ((resultado <= 600) && (resultado > 200))
+        {
+            mensaje = "El resultado es NEGATIVO,\n se tiene que pagar " + redondeo2decimales(resultado) + " Euros.\n El pago se pasara \n en 2 cuotas de " + redondeo2decimales(dosCuotas);
+            return mensaje;
+        }
+        else if (resultado <= 200)
+        {
+            mensaje = "El resultado es NEGATIVO,\n se tiene que pagar " + redondeo2decimales(resultado) + " Euros.\n El pago se pasara en un solo cobro";
+            return mensaje;
+        }
+        else
+        {
+            mensaje = "El resultado es POSITIVO,\n se devolvera " + redondeo2decimales(resultado) + " Euros.\n El pago se realizará en breve en una transferencia.";
+            return mensaje;
+        }
     }
 
     /**
@@ -466,8 +480,9 @@ public class Caldera {
      *         -1311.4749070125 -> -1311.47
      */
     public double redondeo2decimales(double valor) {
-        double valorRedondeado = Math.round(valor*100.0)/100.0;
-        return valorRedondeado;
+        double valorRedondeado = Math.round(valor*100)/100;
+        valor = valorRedondeado;
+        return valor;
     }
 
     /**
