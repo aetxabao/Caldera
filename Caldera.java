@@ -10,7 +10,7 @@
  */
 public class Caldera {
     
-    // DONE: CONSTANTES
+    // DONE: CONSTANTES 
     
     /** El IVA se aplica a todos los gastos. */
     private final double IMP_IVA = 0.22;
