@@ -1,7 +1,7 @@
 /**
  * class DemoCaldera
  * 
- * @author
+ * @author Andrei
  * @version
  */
 public class DemoCaldera {
