@@ -390,6 +390,11 @@ public class Caldera {
      *         se devolvera 45.52 Euros.
      *         El pago se realizara en breve en
      *         una transferencia.
+     *         
+     *         En este método calculamos el dinero que hay que devolver 
+     *         o recibir dependiendo de lo que se haya consumido. Se calculan
+     *         las cuotas y se envía un mensaje que comenta el resultado del
+     *         análisis.
      */
     public String analisisResultado(double resultado) {
         double resto = 0;
@@ -437,6 +442,8 @@ public class Caldera {
      *         25909.067406600003 -> 25909.07
      *         -62950.79553660001 -> -62950.8
      *         -1311.4749070125 -> -1311.47
+     *         
+     * Se decide redondear con la librería Math los resultados.
      */
     public double redondeo2decimales(double valor) {
         valor = (double)Math.round(valor * 100d)/100;
@@ -451,6 +458,9 @@ public class Caldera {
      * @param divisor   Numero entero que divide, ej. 200
      * @return Cociente, numero entero, cuantos divisores caben en el dividendo, ej.
      *         3
+     *         
+     * Se añade el int delante del return para informar de que el resultado lo
+     * queremos en números enteros.
      */
     public int divisionEntera(double dividendo, int divisor) {
         return (int)dividendo/divisor;
@@ -463,6 +473,9 @@ public class Caldera {
      * @param dividendo Numero con decimales que se divide, ej. 647.55
      * @param divisor   Numero entero que divide, ej. 200
      * @return Resto con decimales, ej. 47.55
+     * 
+     * Marcamos que el valor del divisor lo queremos en double para que el 
+     * resultado sea decimal.
      */
     public double restoDivisionEntera(double dividendo, int divisor) {
         return dividendo/(double)divisor;
