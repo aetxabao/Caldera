@@ -55,7 +55,7 @@ public class Caldera {
     //Atributos gastos
     private int mesMasGasto;
     private double maxGasto;
-    private double conceptoMasGasto;
+    private char conceptoMasGasto;
     
     
     /** El IVA se aplica a todos los gasto. */
@@ -280,27 +280,31 @@ public class Caldera {
         System.out.println("       RESULTADO GLOBAL      ");
         System.out.println("=============================");
         System.out.println("Presupuesto:\t"+ presupuesto);
-        System.out.println("Consumo gas:\t" + redondeo2decimales(acumuladoConsumo));
-        System.out.println("Impuestos g.:\t"+ redondeo2decimales(impuestosTotalGas));
-        System.out.println("Mantenimiento:\t" + redondeo2decimales(acumuladoMantenimiento));
-        System.out.println("Iva manto.:\t" + redondeo2decimales(ivaMantenimiento));
-        System.out.println("Gasto agua.:\t" + redondeo2decimales(gastoAgua));
-        System.out.println("Iva agua.:\t" + redondeo2decimales(ivaAgua));
-        System.out.println("Gasto luz.:\t" + redondeo2decimales(gastoLuz));
-        System.out.println("Iva luz:\t"+ redondeo2decimales(ivaLuz) );
+        System.out.println("Consumo gas:\t" + redondeo2decimales((double)acumuladoConsumo));
+        System.out.println("Impuestos g.:\t"+ redondeo2decimales((double)impuestosTotalGas));
+        System.out.println("Mantenimiento:\t" + redondeo2decimales((double)acumuladoMantenimiento));
+        System.out.println("Iva manto.:\t" + redondeo2decimales((double)ivaMantenimiento));
+        System.out.println("Gasto agua.:\t" + redondeo2decimales((double)gastoAgua));
+        System.out.println("Iva agua.:\t" + redondeo2decimales((double)ivaAgua));
+        System.out.println("Gasto luz.:\t" + redondeo2decimales((double)gastoLuz));
+        System.out.println("Iva luz:\t"+ redondeo2decimales((double)ivaLuz) );
         System.out.println("------------------------------");
-        System.out.println("TOTAL:\t" + redondeo2decimales(gastoTotal) + " Euros");
+        System.out.println("TOTAL:\t" + redondeo2decimales((double)gastoTotal) + " Euros");
         System.out.println("------------------------------");
         System.out.println("==============================");
         System.out.println("       RESULTADO X VECINO    ");
         System.out.println("==============================");
         System.out.println("Vecinos:\t" + vecinos);
-        System.out.println("Aporte v.:\t" + redondeo2decimales(aporteVecino));
-        System.out.println("Gasto v,;\t" + redondeo2decimales(gastoVecino));
-        System.out.println("Resultado:\t" + redondeo2decimales(resultadoVecino));
+        System.out.println("Aporte v.:\t" + redondeo2decimales((double)aporteVecino));
+        System.out.println("Gasto v,;\t" + redondeo2decimales((double)gastoVecino));
+        System.out.println("Resultado:\t" + redondeo2decimales((double)resultadoVecino));
         System.out.println("-------------------------------");
         System.out.println(analisisResultado(resultadoVecino));
         System.out.println("-------------------------------");
+        
+        /**
+         * He tenido un problema, y es que si en cada redondeo en cada linea del print no me redondeaba a dos decimales, la unica manera que he encontrado de que eso no pasase es poniendole double.
+         */
     }
 
     /**
@@ -323,7 +327,7 @@ public class Caldera {
         System.out.println("Max. consumo:\t"+ mesMasConsumo + redondeo2decimales(maxConsumo));
         System.out.println("Mes mas caro:\t" + mesMasCaro + redondeo2decimales(maxPrecio));
         System.out.println("Mes mas barato:\t" + mesMasBarato + redondeo2decimales(minPrecio));
-        System.out.println("Mayor gasto en:\t"+ mesMasGasto + redondeo2decimales(maxGasto) + conceptoMasGasto);
+        System.out.println("Mayor gasto en:\t"+ mesMasGasto + redondeo2decimales(maxGasto) + " " + conceptoMasGasto);
         System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + redondeo2decimales(maxMantenimiento));
         System.out.println("-----------------------------");
     }
@@ -480,8 +484,7 @@ public class Caldera {
      *         -1311.4749070125 -> -1311.47
      */
     public double redondeo2decimales(double valor) {
-        double valorRedondeado = Math.round(valor*100)/100;
-        valor = valorRedondeado;
+        valor = (double)Math.round(valor * 100d)/100;
         return valor;
     }
 
@@ -512,5 +515,4 @@ public class Caldera {
         double valorRedondeado = Math.round(division*100.0)/100.0;
         return valorRedondeado;
     }
-
 }
