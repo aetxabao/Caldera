@@ -154,18 +154,41 @@ public class Caldera {
      * @param gas    Cantidad de gas consumido en KWh, ej. 15496
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
-    public void consumo(int mes, int gas, double precio) {
+    public void consumo(int mes, int gas, double precio) 
+    {
         // TODO: consumo
+        acumuladoConsumo = acumuladoConsumo + precio;
+        if (acumuladoConsumo == precio){
+            mesMasBarato = mes;
+            mesMasCaro = mes;
+        }
+        if (maxPrecio < precio){
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        if (minPrecio == 0){
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }else if(minPrecio > precio){
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
     }
-
+    
     /**
      * Gasto de mantenimiento en cada periodo
      * 
      * @param periodo Numero que representa el periodo, ej. OCTUBRE-DICIEMBRE es 1
      * @param importe Valor del gasto de mantenimiento
      */
-    public void mantenimiento(int periodo, double importe) {
+    public void mantenimiento(int periodo, double importe) 
+    {
         // TODO: mantenimiento
+        acumuladoMantenimiento = acumuladoMantenimiento + importe;
+        if(maxMantenimiento < importe){
+            maxMantenimiento = importe;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -175,8 +198,20 @@ public class Caldera {
      * @param concepto Agua 'A' o luz 'L'
      * @param importe  Valor del gasto, ej. 189.03
      */
-    public void gasto(int mes, char concepto, double importe) {
+    public void gasto(int mes, char concepto, double importe) 
+    {
         // TODO: gasto
+        if (concepto == 'A'){
+            gastoAgua = gastoAgua + importe;
+        }
+        if (concepto == 'L'){
+            gastoLuz = gastoLuz + importe;
+        }
+        if (importe > maxGasto){
+            maxGasto = importe;
+            mesMasGasto = mes;
+            conceptoMasGasto = concepto;
+        }
     }
 
     /**
@@ -211,8 +246,37 @@ public class Caldera {
      * 5 cuotas de 262.29 Euros.
      * ------------------
      */
-    public void printResultados() {
+    public void printResultados() 
+    {
         // TODO: printResultados
+        double total = (presupuesto - acumuladoConsumo - ((IMP_IVA + IMP_HIDROCARBUROS) * acumuladoConsumo) - acumuladoMantenimiento - 
+        (IMP_IVA * acumuladoMantenimiento) - gastoAgua - (IMP_IVA * gastoAgua) - gastoLuz - (IMP_IVA * gastoLuz));
+        double vecinosTotales = (total / vecinos);
+        
+        System.out.println("==================");
+        System.out.println("RESULTADO GLOBAL");
+        System.out.println("==================");
+        System.out.println("Presupuesto: " + presupuesto );
+        System.out.println("Consumo gas: " + redondeo2decimales(acumuladoConsumo) );
+        System.out.println("Impuestos g.: " + redondeo2decimales((IMP_IVA + IMP_HIDROCARBUROS) * acumuladoConsumo ));
+        System.out.println("Mantenimiento " + acumuladoMantenimiento );
+        System.out.println("Iva manto.: " + redondeo2decimales((IMP_IVA * acumuladoMantenimiento)));
+        System.out.println("Gasto agua: " + gastoAgua );
+        System.out.println("Iva agua: " + redondeo2decimales((IMP_IVA * gastoAgua)));
+        System.out.println("Gasto luz: " + gastoLuz );
+        System.out.println("Iva luz: " + redondeo2decimales((IMP_IVA * gastoLuz)));
+        System.out.println("------------------");
+        System.out.println("TOTAL : " + redondeo2decimales(total) );
+        System.out.println("------------------");
+        System.out.println("==================");
+        System.out.println("RESULTADO X VECINO");
+        System.out.println("==================");
+        System.out.println("Vecinos: " + vecinos );
+        System.out.println("Aporte v.: " + redondeo2decimales((presupuesto / vecinos)));
+        System.out.println("Gasto v.: " + redondeo2decimales(((total - presupuesto)) / vecinos)*(-1));
+        System.out.println("Resultado: " + redondeo2decimales((total / vecinos)));
+        System.out.println("------------------");
+        System.out.println(analisisResultado((total / vecinos)));
     }
 
     /**
@@ -228,9 +292,20 @@ public class Caldera {
      * P. mas manto.: OCTUBRE-DICIEMBRE 1552.1
      * ------------------
      */
-    public void printEstadisticas() {
+    public void printEstadisticas()
+    {
         // TODO: printEstadisticas
+        System.out.println("==================");
+        System.out.println("   ESTADISTICAS");
+        System.out.println("==================");
+        System.out.println("Max. consumo: \t" + getNombreMes(mesMasConsumo) + "\t" + redondeo2decimales(maxConsumo));
+        System.out.println("Mes mas caro: \t" + getNombreMes(mesMasCaro) + "\t" + redondeo2decimales(maxPrecio));
+        System.out.println("Mes mas barato: \t" + getNombreMes(mesMasBarato) + "\t" + redondeo2decimales(minPrecio));  
+        System.out.println("Mayor gasto en: \t" + getNombreMes(mesMasGasto) + "\t" + redondeo2decimales(maxGasto) + "\t" + conceptoMasGasto);
+        System.out.println("P. mas manto.: \t" + getNombrePeriodo(periodoMasMantenimiento) + "\t" + redondeo2decimales(maxMantenimiento));
+        System.out.println("------------------");
     }
+    
 
     /**
      * Devuelve el nombre del mes asociado a su valor numerico
@@ -238,9 +313,40 @@ public class Caldera {
      * @param numMes Numero del mes del 1 al 12, ej. 1
      * @return Nombre del mes, ej. ENERO
      */
-    public String getNombreMes(int numMes) {
+    public String getNombreMes(int numMes) 
+    {
         // TODO: getNombreMes
-        return "";        
+        /** Tenia entendido que siempre habia que usar el break
+        * pero me aparece unreachable statement y en principio
+        funciona bien sin ponerlo... */
+         switch(numMes){
+            case 1: 
+                return "ENERO";
+            case 2:
+                return "FEBRERO";   
+            case 3:
+                return "MARZO";
+            case 4:
+                return "ABRIL";
+            case 5:
+                return "MAYO";
+            case 6:
+                return "JUNIO";
+            case 7:
+                return "JULIO";
+            case 8:
+                return "AGOSTO";
+            case 9:
+                return "SEPTIEMBRE";
+            case 10:
+                return "OCTUBRE";
+            case 11:
+                return "NOVIEMBRE";
+            case 12:  
+                return "DICIEMBRE";
+            default:
+                return "NO EXISTE EL MES";
+        }              
     }
 
     /**
@@ -249,9 +355,25 @@ public class Caldera {
      * @param concepto Valor caracter, ej. 'L'
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
-    public String getNombreConcepto(char concepto) {
+    public String getNombreConcepto(char concepto) 
+    {
         // TODO: getNombreConcepto
-        return "";        
+        /** lo mismo que arriba
+        */
+        if (concepto == 'L')
+        {
+            return "LUZ";
+        }
+        else if (concepto == 'A')
+        {
+            return "AGUA";              
+        }
+        else if (concepto == 'N')
+            return "NADA";
+        else 
+        {
+            return "NO ES UN CONCEPTO";
+        }    
     }
 
     /**
@@ -263,7 +385,19 @@ public class Caldera {
      */
     public String getNombrePeriodo(int numPeriodo) {
         // TODO: getNombrePeriodo
-        return "";        
+        switch (numPeriodo)
+        {
+            case 1:
+                return "OCTUBRE-DICIEMBRE";
+            case 2:
+                return "ENERO-MARZO";
+            case 3:
+                return "ABRIL-JUNIO";            
+            case 4:
+                return "JULIO-SEPTIEMBRE";
+            default:
+                return "NO ES UN PERIODO";
+        }             
     }
 
     /**
@@ -297,9 +431,63 @@ public class Caldera {
      *         El pago se realizara en breve en
      *         una transferencia.
      */
-    public String analisisResultado(double resultado) {
+    public String analisisResultado(double resultado) 
+    {
         // TODO: analisisResultado
-        return "";
+         if (resultado > 0)
+        {
+            System.out.println("El resultado ha sido POSITIVO,");
+            System.out.println("Se devolveran " + redondeo2decimales(resultado) + " Euros.");
+            System.out.println("El pago se realizara en breve en una transferencia.");
+            System.out.println("------------------");
+        }
+        else if (resultado < 0)
+        {
+            System.out.println("El resultado ha sido NEGATIVO,");
+            System.out.println("se tiene que pagar " + redondeo2decimales(resultado) + " Euros.");
+            if (resultado <= -200)
+            {
+                System.out.println("El pago se pasara en un solo cobro");
+            }
+            else if (resultado > -200 && resultado <= -600)
+            {
+                restoDivisionEntera(resultado, 200);
+                System.out.println("El pago se pasara en");
+                if (divisionEntera (resultado, 200) < 2)
+                {
+                    resultado -= -200;
+                    System.out.println("Se divide en dos cuotas, una de 200 y otra de\n");
+                    System.out.println(redondeo2decimales(resultado) + " €");
+                    System.out.println("------------------");
+                }
+                else if (divisionEntera (resultado, 200) == 2)
+                {
+                    System.out.println("2 cuotas de " + divisionEntera(resultado, 2) + " €");
+                    System.out.println("------------------");
+                }
+                else if (divisionEntera (resultado, 200) > 2)
+                {
+                    System.out.println(divisionEntera(resultado, 200) + " cuotas de"); 
+                    double cuantosEuros = resultado / divisionEntera(resultado, 200);
+                    System.out.println(redondeo2decimales(cuantosEuros) + " Euros y");
+                    System.out.println("otra de " + restoDivisionEntera(resultado, 200) + " €");
+                    System.out.println("------------------");
+                }
+            }
+            else if (resultado > -600)
+            {
+                double cuanto = resultado / 5;
+                redondeo2decimales(cuanto);
+                System.out.println("5 cuotas de " + cuanto + " €");
+                System.out.println("------------------");
+            }
+        }
+        else if (resultado == 0)
+        {
+            System.out.println("El resultado ha sido exacto, ni deudas ni devoluciones.");
+            System.out.println("------------------");
+        }
+        return "Error";
     }
 
     /**
@@ -314,9 +502,11 @@ public class Caldera {
      *         -62950.79553660001 -> -62950.8
      *         -1311.4749070125 -> -1311.47
      */
-    public double redondeo2decimales(double valor) {
+    public double redondeo2decimales(double valor) 
+    {
         // TODO: redondeo2decimales
-        return 0;
+        valor = Math.round(valor * 100) / 100.0;
+        return valor;
     }
 
     /**
@@ -328,9 +518,11 @@ public class Caldera {
      * @return Cociente, numero entero, cuantos divisores caben en el dividendo, ej.
      *         3
      */
-    public int divisionEntera(double dividendo, int divisor) {
+    public int divisionEntera(double dividendo, int divisor) 
+    {
         // TODO: divisionEntera
-        return 0;
+        int resultado = (int)dividendo / divisor;
+        return resultado;
     }
 
     /**
@@ -341,9 +533,11 @@ public class Caldera {
      * @param divisor   Numero entero que divide, ej. 200
      * @return Resto con decimales, ej. 47.55
      */
-    public double restoDivisionEntera(double dividendo, int divisor) {
+    public double restoDivisionEntera(double dividendo, int divisor) 
+    {
         // TODO: restoDivisionEntera
-        return 0;
+        int resultado = (int)dividendo % divisor;
+        return resultado;
     }
 
 }
