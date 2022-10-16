@@ -313,7 +313,8 @@ public class Caldera {
         System.out.println("Gasto v.: " + redondeo2decimales(((total - presupuesto)) / vecinos)*(-1));
         System.out.println("Resultado: " + redondeo2decimales((total / vecinos)));
         System.out.println("------------------");
-        System.out.println(analisisResultado((total / vecinos)));
+        System.out.println(analisisResultado(redondeo2decimales(totalVecino)));
+        System.out.println("------------------");
     }
 
     /**
@@ -458,14 +459,15 @@ public class Caldera {
      */
     public String analisisResultado(double resultado) {
         String str = "";
+        
         if (resultado >= 0){
            str = "El resultado ha sido POSITIVO," + "\n" + "se devolvera " + resultado + " Euros." + "\n" + "El pago se realizara en breve en" + "\n" + "una transferencia.";
            
         }
-        else if ((resultado >= -200) || (resultado < 0)){
+        else if ((resultado >= -200) && (resultado < 0)){
             str = "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + (-1 * resultado) + " Euros." + "\n" + "El pago se pasara en un solo cobro."; 
         }
-        else if ((resultado >= -600) || (resultado < 0)){
+        else if ((resultado >= -600) && (resultado < 0)){
             str = "El resultado ha sido NEGATIVO," + "\n" + "se tiene que pagar " + resultado + " Euros." + "\n" + "El pago se pasara en" + "\n" + ((int)resultado / 200) + "cuotas de 200 Euros y" + "\n" + "otro cobro de " + (resultado - (((int)resultado / 200)) * 200);
         }
         else if (resultado < -600){
