@@ -5,106 +5,157 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author José Ángel Ramírez Moreno
  * @version 1.0
  */
 public class Caldera {
+    /** Aquí estan las constantes. */
+    private final double IMP_IVA = 0.22;
+    private final double IMP_HIDROCARBUROS = 0.20;
     
-    // TODO: CONSTANTES
-
-    /** El IVA se aplica a todos los gasto. */
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
+    private final char NADA = 'N';
     
-    /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
+    private final int NINGUNO = 0;
+    private final int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    private final int PERIODO_ENERO_MARZO = 2;
+    private final int PERIODO_ABRIL_JUNIO = 3;
+    private final int PERIODO_JULIO_SEPTIEMBRE = 4;
     
-
-    // Conceptos gastos
+    /** Aquí estan los atributos. */
+    private int vecinos;
+    private double presupuesto;
     
-
-    // Ningun mes
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
     
-
-    // Periodos
+    private int mesMasConsumo;
+    private double maxConsumo;
+    private int mesMasCaro;
+    private double maxPrecio;
+    private int mesMasBarato;
+    private double minPrecio;
     
-
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
     
-    // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
-
-    // vecinos y presupuesto
-    
-
-    // acumulados
-
-    // estadisticas
-
-    
-    
-    
-    // TODO: constructores
-    
-    /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     */
-    
-
-    /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     * 
-     * @param queVecinos     Numero de vecinos que conforman la comunidad
-     * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
-     *                       gastos
-     */
-    
-
-    
-    // TODO: getters y setters
+    private int mesMasGasto;
+    private double maxGasto;
+    private char conceptoMasGasto;
     
     /**
-     * Fija el valor del presupuesto
-     * 
-     * @param quePresupuesto Valor del presupuesto, ej. 38638
+     * Constructor de la clase caldera.
      */
-    
+    public Caldera(){
+        vecinos = 0;
+        presupuesto = 0;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = 0;
+        mesMasCaro = NINGUNO;
+        maxPrecio = 0;
+        mesMasBarato = NINGUNO;
+        minPrecio = 0;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = 0;
+        mesMasGasto = NINGUNO;
+        maxGasto = 0;
+        conceptoMasGasto = NADA;
+    }
 
     /**
-     * Obtiene el valor del presupuesto
-     * 
-     * @return valor del presupuesto, ej. 38638
+     * Constructor de la clase Caldera. Cambia el valor de vecinos y presupuesto.
      */
-    
+    public Caldera(int queVecinos, int quePresupuesto){
+        vecinos = queVecinos;
+        presupuesto = quePresupuesto;
+        acumuladoConsumo = 0;
+        acumuladoMantenimiento = 0;
+        gastoAgua = 0;
+        gastoLuz = 0;
+        mesMasConsumo = NINGUNO;
+        maxConsumo = 0;
+        mesMasCaro = NINGUNO;
+        maxPrecio = 0;
+        mesMasBarato = NINGUNO;
+        minPrecio = 0;
+        periodoMasMantenimiento = NINGUNO;
+        maxMantenimiento = 0;
+        mesMasGasto = NINGUNO;
+        maxGasto = 0;
+        conceptoMasGasto = NADA;
+    }
 
     /**
-     * Fija el numero de vecinos de la comunidad
-     * 
-     * @param queVecinos numero de vecinos, ej. 48
+     * Fija el valor del presupuesto.
+     * Se usa el parámetro quePresupuesto.
      */
-    
+    public void setPresupuesto (double quePresupuesto){
+        presupuesto = quePresupuesto;
+    }
 
     /**
-     * Obtiene el numero de vecinos
-     * 
-     * @return numero de vecinos, ej. 48
+     * Retorna el valor del presupuesto.
      */
-    
+    public double getPresupuesto(){
+        return presupuesto;
+    }
+
+    /**
+     * Fija el numero de vecinos de la comunidad.
+     * Se usa el parámetro queVecinos.
+     */
+    public void setVecinos(int queVecinos){
+        vecinos = queVecinos;
+    }
+
+    /**
+     * Retorna el numero de vecinos.
+     */
+    public int getVecinos(){
+        return vecinos;
+    }
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
-     * 
-     * @param mes    Numero de mes, 1 es enero, 2 febrero, ..., 12 diciembre, ej. 9
-     * @param gas    Cantidad de gas consumido en KWh, ej. 15496
-     * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
+     * Se usan parámetros para darle valor a los meses, la cantidad de gas y el precio de este.
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        double valorGas = (double) gas * precio;
+        acumuladoConsumo = valorGas + acumuladoConsumo;
+        if (maxConsumo < valorGas){
+            maxConsumo = valorGas;
+            mesMasConsumo = mes;
+        }
+        if (maxPrecio < precio){
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        if (minPrecio == 0){
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }else if(minPrecio > precio){
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
     }
 
     /**
      * Gasto de mantenimiento en cada periodo
-     * 
-     * @param periodo Numero que representa el periodo, ej. OCTUBRE-DICIEMBRE es 1
-     * @param importe Valor del gasto de mantenimiento
+     * Se usan parámetros para el periodo de meses que transcurre y el importe del mantenimiento en ese tiempo.
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        acumuladoMantenimiento = acumuladoMantenimiento + importe;
+        if(maxMantenimiento < importe){
+            maxMantenimiento = importe;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -115,7 +166,17 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
-        // TODO: gasto
+        if (concepto == 'A'){
+            gastoAgua = gastoAgua + importe;
+        }
+        if (concepto == 'L'){
+            gastoLuz = gastoLuz + importe;
+        }
+        if (importe > maxGasto){
+            maxGasto = importe;
+            mesMasGasto = mes;
+            conceptoMasGasto = concepto;
+        }
     }
 
     /**
@@ -149,9 +210,53 @@ public class Caldera {
      * El pago se pasara en
      * 5 cuotas de 262.29 Euros.
      * ------------------
+     * Primeramente se realizan los cálculos de cada uno de los valores de los gastos e impuestos asociados a los
+     * valores que queremos representar en la impresión.
+     * Tras realizar los cálculos se llama al método redondeo2decimales() para evitar números decimales muy largos de representar.
+     * Por último se representa la impresión.
      */
     public void printResultados() {
-        // TODO: printResultados
+        double impuestosGas = acumuladoConsumo * IMP_IVA + acumuladoConsumo 
+        * IMP_HIDROCARBUROS;
+        double impuestosMantenimiento = acumuladoMantenimiento * IMP_IVA;
+        double impuestosAgua = gastoAgua * IMP_IVA;
+        double impuestosLuz = gastoLuz * IMP_IVA;
+        double totalGasto = presupuesto - acumuladoConsumo - impuestosGas 
+        - acumuladoMantenimiento - impuestosMantenimiento 
+        - gastoAgua - impuestosAgua 
+        - gastoLuz - impuestosLuz;
+        double aporteVecino = presupuesto / vecinos;
+        double gastoVecino = (presupuesto + acumuladoConsumo + impuestosGas 
+        + acumuladoMantenimiento 
+        + impuestosMantenimiento 
+        + gastoAgua + impuestosAgua 
+        + gastoLuz + impuestosLuz) / vecinos;
+        double resultadoAporte = totalGasto / vecinos;
+
+        
+        System.out.println("========================"+ "\n" +"    RESULTADO GLOBAL    "
+        +"\n"+ "========================"+ 
+        "\n" + "Presupuesto:   " + presupuesto + 
+        "\n" + "Consumo gas:   " + redondeo2decimales(acumuladoConsumo) +
+        "\n" + "Impuestos g.:  " + redondeo2decimales(impuestosGas) +
+        "\n" + "Mantenimiento: " + redondeo2decimales(acumuladoMantenimiento) +
+        "\n" + "Iva manto.:    " + redondeo2decimales(impuestosMantenimiento) +
+        "\n" + "Gasto Agua:    " + redondeo2decimales(gastoAgua) +
+        "\n" + "Iva agua:      " + redondeo2decimales(impuestosAgua) +
+        "\n" + "Gasto luz:     " + redondeo2decimales(gastoLuz) +
+        "\n" + "Iva luz:       " + redondeo2decimales(impuestosLuz) +
+        "\n" + "-------------------------" + 
+        "\n" + "TOTAL :        " + redondeo2decimales(totalGasto) +
+        "\n" + "-------------------------" + 
+        "\n" + "========================" + 
+        "\n" + "   RESULTADO X VECINO   " + 
+        "\n" + "========================" + 
+        "\n" + "Vecinos:    " + vecinos +
+        "\n" + "Aporte v.:  " + redondeo2decimales(aporteVecino) +
+        "\n" + "Gasto v.:   " + redondeo2decimales(gastoVecino) +
+        "\n" + "Resultado:  " + redondeo2decimales(resultadoAporte)+
+        "\n" + "-------------------------" +
+        "\n" + analisisResultado(resultadoAporte));
     }
 
     /**
@@ -166,9 +271,18 @@ public class Caldera {
      * Mayor gasto en: ABRIL 679.94 LUZ
      * P. mas manto.: OCTUBRE-DICIEMBRE 1552.1
      * ------------------
+     * Aprovechando los métodos que asocian los atributos con los valores que queremos imprimir, se llama a los métodos
+     * para aplicarlos en el System.out.println.
      */
     public void printEstadisticas() {
-        // TODO: printEstadisticas
+        System.out.println( "==========================" + 
+        "\n" + "       ESTADISTICAS       " + 
+        "\n" + "==========================" + 
+        "\n" + "Max. consumo:   " + getNombreMes(mesMasConsumo) +" "+ redondeo2decimales(maxConsumo) +
+        "\n" + "Mes mas caro:   " + getNombreMes(mesMasCaro) +" "+ maxPrecio +
+        "\n" + "Mes mas barato: " + getNombreMes(mesMasBarato) +" "+ minPrecio+
+        "\n" + "Mayor gasto en: " + getNombreMes(mesMasGasto)+ " "+ maxGasto+" "+ getNombreConcepto(conceptoMasGasto) +
+        "\n" + "P. mas manto.:  " + getNombrePeriodo(periodoMasMantenimiento)+ " "+ maxMantenimiento );
     }
 
     /**
@@ -178,8 +292,34 @@ public class Caldera {
      * @return Nombre del mes, ej. ENERO
      */
     public String getNombreMes(int numMes) {
-        // TODO: getNombreMes
-        return "";        
+        switch(numMes){
+            case 1: 
+                return "ENERO";
+            case 2:
+                return "FEBRERO";   
+            case 3:
+                return "MARZO";
+            case 4:
+                return "ABRIL";
+            case 5:
+                return "MAYO";
+            case 6:
+                return "JUNIO";
+            case 7:
+                return "JULIO";
+            case 8:
+                return "AGOSTO";
+            case 9:
+                return "SEPTIEMBRE";
+            case 10:
+                return "OCTUBRE";
+            case 11:
+                return "NOVIEMBRE";
+            case 12:  
+                return "DICIEMBRE";
+            default:
+                return "NINGUNO";
+        }        
     }
 
     /**
@@ -189,8 +329,13 @@ public class Caldera {
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
     public String getNombreConcepto(char concepto) {
-        // TODO: getNombreConcepto
-        return "";        
+        if (concepto == 'L'){
+            return "LUZ";
+        }else if (concepto == 'A'){
+            return "AGUA";
+        }else{
+            return "NADA";
+        }
     }
 
     /**
@@ -201,8 +346,18 @@ public class Caldera {
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
     public String getNombrePeriodo(int numPeriodo) {
-        // TODO: getNombrePeriodo
-        return "";        
+        switch (numPeriodo){
+            case 1:
+                return "ENERO-MARZO";
+            case 2:
+                return "ABRIL-JUNIO";
+            case 3:
+                return "JULIO-SEPTIEMBRE";
+            case 4:
+                return "OCTUBRE-DICIEMBRE";
+            default:
+                return "NINGUN PERIODO";
+        }        
     }
 
     /**
@@ -235,10 +390,45 @@ public class Caldera {
      *         se devolvera 45.52 Euros.
      *         El pago se realizara en breve en
      *         una transferencia.
+     *         
+     *         En este método calculamos el dinero que hay que devolver 
+     *         o recibir dependiendo de lo que se haya consumido. Se calculan
+     *         las cuotas y se envía un mensaje que comenta el resultado del
+     *         análisis.
      */
     public String analisisResultado(double resultado) {
-        // TODO: analisisResultado
-        return "";
+        double resto = 0;
+        int cuotas = 0;
+        String mensaje = "NINGUNO";
+        if (resultado >= -200 && resultado < 0){
+            resultado = -(resultado);
+            resultado = redondeo2decimales(resultado);
+            mensaje = ("El resultado ha sido NEGATIVO,"+"\n"+
+            "se tiene que pagar "+ resultado +" Euros."+ "\n" +
+            "El pago se pasara en un solo cobro");
+        }else if (resultado<-200 && resultado>=-600){
+            resto = resultado%200;
+            cuotas = (int) resultado/200;
+            resultado = -(resultado);
+            resultado = redondeo2decimales(resultado);
+            mensaje = ("El resultado ha sido NEGATIVO,"+"\n"+
+            "se tiene que pagar "+ resultado +" Euros."+ "\n" +
+            "El pago se pasara en "+ cuotas+ " cuotas de 200 Euros y otro cobro de" + resto);
+        }else if (resultado < -600){
+            double dineroCuotas = -(resultado / 5);
+            resultado = redondeo2decimales(resultado);
+            dineroCuotas = redondeo2decimales(dineroCuotas);
+            mensaje = ("El resultado ha sido NEGATIVO,"+ "\n" +
+            "se tiene que pagar "+ resultado+" Euros." + "\n" +
+            "El pago se pasara en" + "\n" +
+            "5 cuotas de " + dineroCuotas + " Euros.");
+        }else if (resultado >= 0){
+             mensaje = ("El resultado ha sido POSITIVO,"+ "\n" +
+             "se devolvera "+ resultado +"Euros."+ "\n" +
+             "El pago se realizara en breve en" + "\n" +
+             "una transferencia.");
+        }
+        return mensaje;
     }
 
     /**
@@ -252,10 +442,12 @@ public class Caldera {
      *         25909.067406600003 -> 25909.07
      *         -62950.79553660001 -> -62950.8
      *         -1311.4749070125 -> -1311.47
+     *         
+     * Se decide redondear con la librería Math los resultados.
      */
     public double redondeo2decimales(double valor) {
-        // TODO: redondeo2decimales
-        return 0;
+        valor = (double)Math.round(valor * 100d)/100;
+        return valor;
     }
 
     /**
@@ -266,10 +458,12 @@ public class Caldera {
      * @param divisor   Numero entero que divide, ej. 200
      * @return Cociente, numero entero, cuantos divisores caben en el dividendo, ej.
      *         3
+     *         
+     * Se añade el int delante del return para informar de que el resultado lo
+     * queremos en números enteros.
      */
     public int divisionEntera(double dividendo, int divisor) {
-        // TODO: divisionEntera
-        return 0;
+        return (int)dividendo/divisor;
     }
 
     /**
@@ -279,10 +473,12 @@ public class Caldera {
      * @param dividendo Numero con decimales que se divide, ej. 647.55
      * @param divisor   Numero entero que divide, ej. 200
      * @return Resto con decimales, ej. 47.55
+     * 
+     * Marcamos que el valor del divisor lo queremos en double para que el 
+     * resultado sea decimal.
      */
     public double restoDivisionEntera(double dividendo, int divisor) {
-        // TODO: restoDivisionEntera
-        return 0;
+        return dividendo/(double)divisor;
     }
 
 }
