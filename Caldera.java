@@ -5,86 +5,144 @@
  * informando cuanto se tiene que devolver o
  * cuanto mas tiene que pagar cada vecino.
  * 
- * @author Aitor Etxabarren
+ * @author Alberto Navarro
  * @version 1.0
  */
 public class Caldera {
     
-    // TODO: CONSTANTES
-
+    // Constantes
+    
+    //Constantes impuestos
+    private final double IMP_IVA = 0.22;
+    private final double IMP_HIDROCARBUROS = 0.22;
+    
+    //Constantes gastos
+    private final char AGUA = 'A';
+    private final char LUZ = 'L';
+    private final char NADA = 'N';
+    
+    //Constante Ningún mes
+    private final int NINGUNO = 0;
+    
+    //Constantes periodo
+    private final int PERIODO_OCTUBRE_DICIEMBRE = 1;
+    private final int PERIODO_ENERO_MARZ0 = 2;
+    private final int PERIODO_ABRIL_JUNIO = 3;
+    private final int PERIODO_JULIO_SEPTIEMBRE = 4;
+    
+    //Atributos
+    private int vecinos;
+    private double presupuesto;
+    
+    //Atributos gastos
+    private double acumuladoConsumo;
+    private double acumuladoMantenimiento;
+    private double gastoAgua;
+    private double gastoLuz;
+    
+    //Atributos meses
+    private int mesMasConsumo;
+    private double maxConsumo;
+    private int mesMasCaro;
+    private double maxPrecio;
+    private int mesMasBarato;
+    private double minPrecio;
+    
+    //Otros Atributos
+    private int periodoMasMantenimiento;
+    private double maxMantenimiento;
+    
+    //Atributos gastos
+    private int mesMasGasto;
+    private double maxGasto;
+    private char conceptoMasGasto;
+    
+    
     /** El IVA se aplica a todos los gasto. */
     
     /** El impuesto de hidrocarburos solo se aplica al gas, ademas del iva. */
     
-
-    // Conceptos gastos
-    
-
-    // Ningun mes
-    
-
-    // Periodos
-    
-
-    
-    // TODO: VARIABLES DE CLASE (PROPIEDADES/ATRIBUTOS)
-
-    // vecinos y presupuesto
-    
-
-    // acumulados
-
-    // estadisticas
-
-    
-    
-    
     // TODO: constructores
     
+    public Caldera()
+    {
+        //Atributos meses
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NINGUNO;
+        mesMasCaro = NINGUNO;
+        maxPrecio = NINGUNO;
+        mesMasBarato = NINGUNO;
+        minPrecio = NINGUNO;
+            
+        //Atributos periodo
+        periodoMasMantenimiento = NINGUNO;
+        
+        //Atributo masGasto
+        conceptoMasGasto = NADA;
+    }
+    
+        public Caldera(int queVecinos, double quePresupuesto)
+    {
+        //Atributos con valor pasado
+        vecinos = queVecinos;
+        presupuesto = quePresupuesto;
+        
+        //Atributos meses
+        mesMasConsumo = NINGUNO;
+        maxConsumo = NINGUNO;
+        mesMasCaro = NINGUNO;
+        maxPrecio = NINGUNO;
+        mesMasBarato = NINGUNO;
+        minPrecio = NINGUNO;
+            
+        //Atributos periodo
+        periodoMasMantenimiento = NINGUNO;
+        
+        //Atributo masGasto
+        conceptoMasGasto = 0;
+    }
+    
+    //Getters
     /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     */
-    
-
-    /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     * 
-     * @param queVecinos     Numero de vecinos que conforman la comunidad
-     * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
-     *                       gastos
-     */
-    
-
-    
-    // TODO: getters y setters
+    * Obtiene el numero de vecinos
+    * 
+    * @return numero de vecinos, ej. 48
+    */
+    public int getVecinos()
+    {
+        return vecinos;
+    }
     
     /**
-     * Fija el valor del presupuesto
-     * 
-     * @param quePresupuesto Valor del presupuesto, ej. 38638
-     */
-    
-
+    * Obtiene el valor del presupuesto
+    * 
+    * @return valor del presupuesto, ej. 38638
+    */
+    public double getPresupuesto()
+    {
+        return presupuesto;
+    }
+ 
+    //Setters
     /**
-     * Obtiene el valor del presupuesto
-     * 
-     * @return valor del presupuesto, ej. 38638
-     */
+    * Fija el numero de vecinos de la comunidad
+    * 
+    * @param queVecinos numero de vecinos, ej. 48
+    */
+    public void setVecinos(int queVecinos)
+    {
+        vecinos = queVecinos;
+    }
     
-
     /**
-     * Fija el numero de vecinos de la comunidad
-     * 
-     * @param queVecinos numero de vecinos, ej. 48
-     */
-    
-
-    /**
-     * Obtiene el numero de vecinos
-     * 
-     * @return numero de vecinos, ej. 48
-     */
-    
+    * Fija el valor del presupuesto
+    * 
+    * @param quePresupuesto Valor del presupuesto, ej. 38638
+    */
+    public void setPresupuesto(double quePresupuesto)
+    {
+        presupuesto = quePresupuesto;
+    }
 
     /**
      * Cantidad de gas consumido cada mes al precio de mercado
@@ -94,7 +152,38 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        System.out.println("En " + getNombreMes(mes) + " se han consumido "+ gas +" KWh a un precio de " + precio +
+        " Euros/KWh ");
+        
+        double consumo = gas*precio;
+        acumuladoConsumo = gas*precio + acumuladoConsumo;
+        
+        if (consumo > maxConsumo)
+        {
+            consumo = maxConsumo;
+            mesMasConsumo = mes;
+        }
+        
+        if (maxPrecio < precio)
+        {
+            maxPrecio = precio;
+            mesMasCaro = mes;
+        }
+        
+        /**
+         *Estan en if separados, por que si no al poner al llamar por primera vez al metodo, minimo, será 0 en vez del primer valor(ya que si solo llamamos 1 vez
+         *al metodo, tanto minimo y maximo seran el mismo precio.) 
+         */
+        if(minPrecio == 0)
+        {
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
+        else if(minPrecio > precio)
+        {
+            minPrecio = precio;
+            mesMasBarato = mes;
+        }
     }
 
     /**
@@ -104,7 +193,16 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        System.out.println("En el periodo "+ periodo +"," + getNombrePeriodo(periodo) + " el gasto de mantenimiento ha supuesto "+ importe +
+        " Euros");
+    
+        
+        acumuladoMantenimiento = importe + acumuladoConsumo;
+        if (importe > maxMantenimiento)
+        {
+            importe = maxMantenimiento;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -115,7 +213,25 @@ public class Caldera {
      * @param importe  Valor del gasto, ej. 189.03
      */
     public void gasto(int mes, char concepto, double importe) {
-        // TODO: gasto
+        System.out.println("En " +  getNombreMes(mes) + " se ha gastado en "
+        + getNombreConcepto(concepto) +" " + importe + " Euros");
+        
+
+          if (concepto == 'L')
+        {
+            gastoLuz = gastoLuz + importe;
+        }
+        else if (concepto == 'A')
+        {
+            gastoAgua = gastoAgua + importe;
+        }
+        
+        if (importe > maxGasto)
+        {
+            maxGasto = importe;
+            mesMasGasto = mes;
+            conceptoMasGasto = concepto;
+        }
     }
 
     /**
@@ -151,7 +267,44 @@ public class Caldera {
      * ------------------
      */
     public void printResultados() {
-        // TODO: printResultados
+        double impuestosTotalGas = (acumuladoConsumo * IMP_IVA) + (acumuladoConsumo * IMP_HIDROCARBUROS);
+        double ivaMantenimiento = acumuladoMantenimiento * IMP_IVA;
+        double ivaAgua = gastoAgua * IMP_IVA;
+        double ivaLuz = gastoLuz * IMP_IVA;
+        double gastoTotal = (presupuesto - acumuladoConsumo - impuestosTotalGas - acumuladoMantenimiento - ivaMantenimiento -
+                            gastoAgua - ivaAgua - gastoLuz - ivaLuz);
+        double aporteVecino = presupuesto/vecinos;
+        double gastoVecino = (presupuesto + acumuladoConsumo + impuestosTotalGas + acumuladoMantenimiento + ivaMantenimiento + gastoAgua + ivaAgua + gastoLuz + ivaLuz)/vecinos;
+        double resultadoVecino = gastoVecino - aporteVecino;
+        System.out.println("=============================");
+        System.out.println("       RESULTADO GLOBAL      ");
+        System.out.println("=============================");
+        System.out.println("Presupuesto:\t"+ presupuesto);
+        System.out.println("Consumo gas:\t" + redondeo2decimales((double)acumuladoConsumo));
+        System.out.println("Impuestos g.:\t"+ redondeo2decimales((double)impuestosTotalGas));
+        System.out.println("Mantenimiento:\t" + redondeo2decimales((double)acumuladoMantenimiento));
+        System.out.println("Iva manto.:\t" + redondeo2decimales((double)ivaMantenimiento));
+        System.out.println("Gasto agua.:\t" + redondeo2decimales((double)gastoAgua));
+        System.out.println("Iva agua.:\t" + redondeo2decimales((double)ivaAgua));
+        System.out.println("Gasto luz.:\t" + redondeo2decimales((double)gastoLuz));
+        System.out.println("Iva luz:\t"+ redondeo2decimales((double)ivaLuz) );
+        System.out.println("------------------------------");
+        System.out.println("TOTAL:\t" + redondeo2decimales((double)gastoTotal) + " Euros");
+        System.out.println("------------------------------");
+        System.out.println("==============================");
+        System.out.println("       RESULTADO X VECINO    ");
+        System.out.println("==============================");
+        System.out.println("Vecinos:\t" + vecinos);
+        System.out.println("Aporte v.:\t" + redondeo2decimales((double)aporteVecino));
+        System.out.println("Gasto v,;\t" + redondeo2decimales((double)gastoVecino));
+        System.out.println("Resultado:\t" + redondeo2decimales((double)resultadoVecino));
+        System.out.println("-------------------------------");
+        System.out.println(analisisResultado(resultadoVecino));
+        System.out.println("-------------------------------");
+        
+        /**
+         * He tenido un problema, y es que si en cada redondeo en cada linea del print no me redondeaba a dos decimales, la unica manera que he encontrado de que eso no pasase es poniendole double.
+         */
     }
 
     /**
@@ -168,7 +321,15 @@ public class Caldera {
      * ------------------
      */
     public void printEstadisticas() {
-        // TODO: printEstadisticas
+        System.out.println("=============================");
+        System.out.println("         ESTADISTICAS        ");
+        System.out.println("=============================");
+        System.out.println("Max. consumo:\t"+ mesMasConsumo + redondeo2decimales(maxConsumo));
+        System.out.println("Mes mas caro:\t" + mesMasCaro + redondeo2decimales(maxPrecio));
+        System.out.println("Mes mas barato:\t" + mesMasBarato + redondeo2decimales(minPrecio));
+        System.out.println("Mayor gasto en:\t"+ mesMasGasto + redondeo2decimales(maxGasto) + " " + conceptoMasGasto);
+        System.out.println("P. mas manto.:\t" + periodoMasMantenimiento + redondeo2decimales(maxMantenimiento));
+        System.out.println("-----------------------------");
     }
 
     /**
@@ -178,8 +339,35 @@ public class Caldera {
      * @return Nombre del mes, ej. ENERO
      */
     public String getNombreMes(int numMes) {
-        // TODO: getNombreMes
-        return "";        
+        switch (numMes)
+        {
+            case 1:
+                return "Enero";
+            case 2:
+                return "Febrero";
+            case 3:
+                return "Marzo";
+            case 4:
+                return "Abril";
+            case 5:
+                return "Mayo";
+            case 6:
+                return "Junio";
+            case 7:
+                return "Julio";
+            case 8:
+                return "Agosto";
+            case 9:
+                return "Septiembre";
+            case 10:
+                return "Octubre";
+            case 11:
+                return "Noviembre";
+            case 12:
+                return "Diciembre";
+            default:
+                return "Enero";
+        }        
     }
 
     /**
@@ -189,8 +377,18 @@ public class Caldera {
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
     public String getNombreConcepto(char concepto) {
-        // TODO: getNombreConcepto
-        return "";        
+        if (concepto == 'L')
+        {
+            return "LUZ";
+        }
+        else if (concepto == 'A')
+        {
+            return "AGUA";
+        }
+        else
+        {
+            return "NADA";
+        }
     }
 
     /**
@@ -201,8 +399,19 @@ public class Caldera {
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
     public String getNombrePeriodo(int numPeriodo) {
-        // TODO: getNombrePeriodo
-        return "";        
+        switch (numPeriodo)
+        {
+            case 1:
+                return "OCTUBRE-DICIEMBRE";
+            case 2:
+                return "ENERO-MARZO";
+            case 3:
+                return "ABRIL-JUNIO";
+            case 4:
+                return "JULIO-SEPTIEMBRE";
+            default:
+                return "NINGUN PERIODO";
+        }
     }
 
     /**
@@ -237,8 +446,29 @@ public class Caldera {
      *         una transferencia.
      */
     public String analisisResultado(double resultado) {
-        // TODO: analisisResultado
-        return "";
+        String mensaje;
+        double cincoCuotas = resultado / 5;
+        double dosCuotas = resultado / 2;
+        if (resultado > 600)
+        {
+            mensaje = "El resultado es NEGATIVO,\n se tiene que pagar " + redondeo2decimales(resultado) + " Euros.\n El pago se pasara \n en 5 cuotas de " + redondeo2decimales(cincoCuotas);
+            return mensaje;
+        }
+        else if ((resultado <= 600) && (resultado > 200))
+        {
+            mensaje = "El resultado es NEGATIVO,\n se tiene que pagar " + redondeo2decimales(resultado) + " Euros.\n El pago se pasara \n en 2 cuotas de " + redondeo2decimales(dosCuotas);
+            return mensaje;
+        }
+        else if (resultado <= 200)
+        {
+            mensaje = "El resultado es NEGATIVO,\n se tiene que pagar " + redondeo2decimales(resultado) + " Euros.\n El pago se pasara en un solo cobro";
+            return mensaje;
+        }
+        else
+        {
+            mensaje = "El resultado es POSITIVO,\n se devolvera " + redondeo2decimales(resultado) + " Euros.\n El pago se realizará en breve en una transferencia.";
+            return mensaje;
+        }
     }
 
     /**
@@ -254,8 +484,8 @@ public class Caldera {
      *         -1311.4749070125 -> -1311.47
      */
     public double redondeo2decimales(double valor) {
-        // TODO: redondeo2decimales
-        return 0;
+        valor = (double)Math.round(valor * 100d)/100;
+        return valor;
     }
 
     /**
@@ -268,8 +498,8 @@ public class Caldera {
      *         3
      */
     public int divisionEntera(double dividendo, int divisor) {
-        // TODO: divisionEntera
-        return 0;
+        int division = (int)dividendo / divisor;
+        return division;
     }
 
     /**
@@ -281,8 +511,8 @@ public class Caldera {
      * @return Resto con decimales, ej. 47.55
      */
     public double restoDivisionEntera(double dividendo, int divisor) {
-        // TODO: restoDivisionEntera
-        return 0;
+        double division = dividendo % divisor;
+        double valorRedondeado = Math.round(division*100.0)/100.0;
+        return valorRedondeado;
     }
-
 }
