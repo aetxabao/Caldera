@@ -74,18 +74,6 @@ public class Caldera {
         conceptoMasGasto = NADA;
     }
         
-
-    /**
-     * Constructor de la clase Caldera. Inicializa los atributos.
-     * 
-     * @param queVecinos     Numero de vecinos que conforman la comunidad
-     * @param quePresupuesto Presupuesto inicial con el que se pretende afrontar los
-     *                       gastos
-     */
-    
-
-    
-    // TODO: getters y setters
     /**
      * Obtiene el numero de vecinos
      * 
@@ -130,11 +118,21 @@ public class Caldera {
      * @param precio Precio en Euros al que se ha conseguido el gas, ej. 0.067668
      */
     public void consumo(int mes, int gas, double precio) {
-        // TODO: consumo
+        // DONE: consumo
+        acumuladoConsumo = mes;
         acumuladoConsumo += (gas*precio);
-        if(mesMasConsumo > maxConsumo) {
-            
+        acumuladoConsumo += precio;
+        if(acumuladoConsumo == 0) {
+            maxConsumo = acumuladoConsumo;
+        } else if(acumuladoConsumo > maxConsumo) {
+            maxConsumo = acumuladoConsumo;
         }
+        
+        if(precio >= 0) {
+            maxPrecio = precio;
+        } else if(precio > maxPrecio) {
+            maxPrecio = precio;
+        } 
     }
 
     /**
@@ -144,7 +142,12 @@ public class Caldera {
      * @param importe Valor del gasto de mantenimiento
      */
     public void mantenimiento(int periodo, double importe) {
-        // TODO: mantenimiento
+        // DONE: mantenimiento
+        acumuladoMantenimiento += importe;
+        if(importe > maxMantenimiento) {
+            maxMantenimiento = importe;
+            periodoMasMantenimiento = periodo;
+        }
     }
 
     /**
@@ -156,6 +159,31 @@ public class Caldera {
      */
     public void gasto(int mes, char concepto, double importe) {
         // TODO: gasto
+        double cantAgua = 0;
+        double cantLuz = 0;
+        if(concepto == 'A') {
+            gastoAgua += importe;
+        }
+        if(importe > cantAgua) {
+            cantAgua = importe;
+        }
+        
+        if(concepto == 'L') {
+            gastoLuz += importe;
+        }
+        if(importe > cantLuz) {
+            cantLuz = importe;
+        }
+        
+        if(cantAgua > cantLuz) {
+            maxGasto = cantAgua;
+            mesMasGasto = mes;
+            conceptoMasGasto = 'A';
+        } else {
+            maxGasto = cantLuz;
+            mesMasGasto = mes;
+            conceptoMasGasto = 'L';
+        }
     }
 
     /**
@@ -257,7 +285,7 @@ public class Caldera {
      * @return Nombre del concepto, ej. 'LUZ'. Si no es agua o luz devuelve "NADA"
      */
     public String getNombreConcepto(char concepto) {
-        // TODO: getNombreConcepto
+        // DONE: getNombreConcepto
         if(concepto == 'L') {
             return "LUZ";
         } else if(concepto == 'A') {
@@ -275,7 +303,7 @@ public class Caldera {
      *         "OCTUBRE-DICIEMBRE". Sino devuelve "NINGUN PERIODO"
      */
     public String getNombrePeriodo(int numPeriodo) {
-        // TODO: getNombrePeriodo
+        // DONE: getNombrePeriodo
         switch(numPeriodo) {
              case 1:
                  return "PERIODO_OCTUBRE_DICIEMBRE";
