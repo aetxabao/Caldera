@@ -108,7 +108,7 @@ public class Caldera {
         maxPrecio = 0;
         mesMasBarato = NINGUNO;
         minPrecio = 0;
-        periodoMasMantenimiento = 0;
+        periodoMasMantenimiento = NINGUNO;
         maxMantenimiento = 0;
         mesMasGasto = NINGUNO;
         maxGasto = 0;
@@ -167,12 +167,12 @@ public class Caldera {
             maxConsumo = consumo;
             mesMasConsumo = mes;
         }
-        if (gas > maxPrecio){
+        if (precio > maxPrecio){
             maxPrecio = precio;
             mesMasCaro = mes;
         }
         if (minPrecio == 0) minPrecio = Double.MAX_VALUE;
-        if (gas < minPrecio){
+        if (precio < minPrecio){
             minPrecio = precio;
             mesMasBarato = mes;
         }
